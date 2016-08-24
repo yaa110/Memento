@@ -27,8 +27,8 @@ abstract public class ModelAdapter<T extends DatabaseModel, VH extends ModelView
 		holder.populate(item);
 
 		// Check if item is selected
-		if (selected.contains(item)) holder.setSelected(item, true);
-		else holder.setSelected(item, false);
+		if (selected.contains(item)) holder.setSelected(true);
+		else holder.setSelected(false);
 
 		holder.holder.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -55,12 +55,12 @@ abstract public class ModelAdapter<T extends DatabaseModel, VH extends ModelView
 	private void toggleSelection(VH holder, T item) {
 		if (selected.contains(item)) {
 			selected.remove(item);
-			holder.setSelected(item, false);
+			holder.setSelected(false);
 			if (selected.isEmpty()) listener.onChangeSelection(false);
 		} else {
 			if (selected.isEmpty()) listener.onChangeSelection(true);
 			selected.add(item);
-			holder.setSelected(item, true);
+			holder.setSelected(true);
 		}
 	}
 
