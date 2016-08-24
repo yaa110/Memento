@@ -2,4 +2,15 @@
 <resources>
     <color name="main_color">#33ac71</color>
     <color name="main_color_dark">#229b60</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <color name="ripple_dark">#1dffffff</color>
+    <color name="ripple_light">#1d000000</color>
+    <color name="bg">#fafafa</color>
+    <color name="splitter">#1f000000</color>
+    <color name="main_text">#de000000</color>
+    <color name="secondary_text">#89000000</color>
+    <color name="hint_text">#61000000</color>
 </resources>

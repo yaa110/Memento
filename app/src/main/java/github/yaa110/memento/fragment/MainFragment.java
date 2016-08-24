@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import github.yaa110.memento.R;
+
 public class MainFragment extends Fragment {
 
 	public MainFragment(){}
@@ -14,6 +16,6 @@ public class MainFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		return super.onCreateView(inflater, container, savedInstanceState);
+		return inflater.inflate(R.layout.fragment_main, container, false);
 	}
 }
