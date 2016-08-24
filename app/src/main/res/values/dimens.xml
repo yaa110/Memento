@@ -3,7 +3,6 @@
     <dimen name="smaller_text">13sp</dimen>
     <dimen name="small_text">14sp</dimen>
     <dimen name="medium_text">16sp</dimen>
-    <dimen name="title_text">18sp</dimen>
-    <dimen name="large_text">24sp</dimen>
+    <dimen name="large_text">18sp</dimen>
     <dimen name="drawer_width">270dp</dimen>
 </resources>

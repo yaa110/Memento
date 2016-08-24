@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 public class App extends Application {
 	public static App instance;
 
+	public static final String DATE_FORMAT = "E, LLLL d, yyyy";
+
 	/* Preferences */
 
 	/* Preferences' Keys */

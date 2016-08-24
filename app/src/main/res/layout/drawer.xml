@@ -27,7 +27,7 @@
         android:singleLine="true" />
 
     <TextView
-        android:id="@+id/drawer_header"
+        android:id="@+id/drawer_date"
         android:layout_below="@+id/app_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
 
     <ListView
         android:id="@+id/drawer_list"
-        android:layout_below="@+id/drawer_header"
+        android:layout_below="@+id/drawer_date"
         android:layout_above="@+id/settings_btn"
         android:layout_width="@dimen/drawer_width"
         android:layout_height="match_parent"
