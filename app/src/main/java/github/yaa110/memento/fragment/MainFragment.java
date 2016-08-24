@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import github.yaa110.memento.R;
 
 public class MainFragment extends Fragment {
+	public View fab;
 
 	public MainFragment(){}
 
@@ -17,5 +18,12 @@ public class MainFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_main, container, false);
+	}
+
+	@Override
+	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		fab = view.findViewById(R.id.new_category_fab);
 	}
 }

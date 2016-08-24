@@ -19,9 +19,10 @@ import github.yaa110.memento.model.Drawer;
 
 public class MainActivity extends AppCompatActivity {
 	private DrawerLayout drawerLayout;
-	private DrawerAdapter drawerAdapter;
+	public View drawerHolder;
 	private boolean exitStatus = false;
-	private Toolbar toolbar;
+
+	private MainFragment fragment;
 
 	public Handler handler = new Handler();
 	public Runnable runnable = new Runnable() {
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
 		try {
@@ -48,21 +49,28 @@ public class MainActivity extends AppCompatActivity {
 		setupDrawer();
 
 		if (savedInstanceState == null) {
+			fragment = new MainFragment();
+
 			getSupportFragmentManager().beginTransaction()
-				.add(R.id.container, new MainFragment())
+				.add(R.id.container, fragment)
 				.commit();
 		}
 	}
 
 	@Override
 	public void onBackPressed() {
+		if (drawerLayout.isDrawerOpen(drawerHolder)) {
+			drawerLayout.closeDrawers();
+			return;
+		}
+
 		if (exitStatus) {
 			finish();
 		} else {
 			exitStatus = true;
 
 			try {
-				Snackbar.make(toolbar, R.string.exit_message, Snackbar.LENGTH_LONG).show();
+				Snackbar.make(fragment.fab, R.string.exit_message, Snackbar.LENGTH_LONG).show();
 			} catch (Exception ignored) {}
 
 			handler.postDelayed(runnable, 3500);
@@ -74,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 		((TextView) findViewById(R.id.drawer_date)).setText(Formatter.formatDate());
 
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		drawerHolder = findViewById(R.id.drawer_holder);
 		ListView drawerList = (ListView) findViewById(R.id.drawer_list);
 
 		// Navigation menu button
@@ -92,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
-		// Setup adapter of drawer
-		drawerAdapter = new DrawerAdapter(
+		// Set adapter of drawer
+		drawerList.setAdapter(new DrawerAdapter(
 			getApplicationContext(),
 			new DrawerAdapter.ClickListener() {
 				@Override
@@ -101,13 +110,15 @@ public class MainActivity extends AppCompatActivity {
 					onClickDrawer(type);
 				}
 			}
-		);
-
-		drawerList.setAdapter(drawerAdapter);
+		));
 	}
 
 	private void onClickDrawer(final int type) {
 		drawerLayout.closeDrawers();
+
+		try {
+			handler.removeCallbacks(runnable);
+		} catch (Exception ignored) {}
 
 		new Thread() {
 			@Override
