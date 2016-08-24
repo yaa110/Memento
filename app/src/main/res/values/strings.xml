@@ -2,4 +2,8 @@
     <string name="app_name">Memento</string>
     <string name="menu">menu</string>
     <string name="settings">Preferences</string>
+    <string name="about">About</string>
+    <string name="archived">Archived notes</string>
+    <string name="trash">Trash</string>
+    <string name="exit_message">Press again to exit</string>
 </resources>

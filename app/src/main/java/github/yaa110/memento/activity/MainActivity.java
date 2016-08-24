@@ -1,15 +1,34 @@
 package github.yaa110.memento.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import github.yaa110.memento.R;
+import github.yaa110.memento.adapter.DrawerAdapter;
 import github.yaa110.memento.fragment.MainFragment;
 import github.yaa110.memento.inner.Formatter;
+import github.yaa110.memento.model.Drawer;
 
 public class MainActivity extends AppCompatActivity {
+	private DrawerLayout drawerLayout;
+	private DrawerAdapter drawerAdapter;
+	private boolean exitStatus = false;
+
+	public Handler handler = new Handler();
+	public Runnable runnable = new Runnable() {
+		@Override
+		public void run() {
+			exitStatus = false;
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,19 +38,102 @@ public class MainActivity extends AppCompatActivity {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
-		// Set date in drawer
-		((TextView) findViewById(R.id.drawer_date)).setText(Formatter.formatDate());
-
 		try {
 			//noinspection ConstantConditions
 			getSupportActionBar().setDisplayShowTitleEnabled(false);
 		} catch (Exception ignored) {
 		}
 
+		setupDrawer();
+
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 				.add(R.id.container, new MainFragment())
 				.commit();
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (exitStatus) {
+			finish();
+		} else {
+			exitStatus = true;
+
+			try {
+				Snackbar.make(fab, R.string.exit_message, Snackbar.LENGTH_LONG).show();
+			} catch (Exception ignored) {}
+
+			handler.postDelayed(runnable, 3500);
+		}
+	}
+
+	private void setupDrawer() {
+		// Set date in drawer
+		((TextView) findViewById(R.id.drawer_date)).setText(Formatter.formatDate());
+
+		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		ListView drawerList = (ListView) findViewById(R.id.drawer_list);
+
+		// Navigation menu button
+		findViewById(R.id.nav_btn).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				drawerLayout.openDrawer(GravityCompat.START);
+			}
+		});
+
+		// Settings button
+		findViewById(R.id.settings_btn).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				onClickDrawer(Drawer.TYPE_SETTINGS);
+			}
+		});
+
+		// Setup adapter of drawer
+		drawerAdapter = new DrawerAdapter(
+			getApplicationContext(),
+			new DrawerAdapter.ClickListener() {
+				@Override
+				public void onClick(int type) {
+					onClickDrawer(type);
+				}
+			}
+		);
+
+		drawerList.setAdapter(drawerAdapter);
+	}
+
+	private void onClickDrawer(final int type) {
+		drawerLayout.closeDrawers();
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					// wait for completion of drawer animation
+					sleep(500);
+
+					switch (type) {
+						case Drawer.TYPE_ABOUT:
+							// TODO about drawer
+							break;
+						case Drawer.TYPE_ARCHIVED:
+							// TODO archived drawer
+							break;
+						case Drawer.TYPE_DELETED:
+							// TODO trash drawer
+							break;
+						case Drawer.TYPE_SETTINGS:
+							// TODO settings drawer
+							break;
+					}
+
+					interrupt();
+				} catch (Exception ignored) {
+				}
+			}
+		}.start();
 	}
 }
