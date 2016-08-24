@@ -5,4 +5,7 @@
     <dimen name="medium_text">16sp</dimen>
     <dimen name="large_text">18sp</dimen>
     <dimen name="drawer_width">270dp</dimen>
+    <dimen name="fab">56dp</dimen>
+    <dimen name="fab_mini">40dp</dimen>
+    <dimen name="drawer_height">48dp</dimen>
 </resources>

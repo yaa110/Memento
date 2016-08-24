@@ -6,4 +6,5 @@
     <string name="archived">Archived notes</string>
     <string name="trash">Trash</string>
     <string name="exit_message">Press again to exit</string>
+    <string name="new_category">New category</string>
 </resources>

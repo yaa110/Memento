@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 	private DrawerLayout drawerLayout;
 	private DrawerAdapter drawerAdapter;
 	private boolean exitStatus = false;
+	private Toolbar toolbar;
 
 	public Handler handler = new Handler();
 	public Runnable runnable = new Runnable() {
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
 		try {
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 			exitStatus = true;
 
 			try {
-				Snackbar.make(fab, R.string.exit_message, Snackbar.LENGTH_LONG).show();
+				Snackbar.make(toolbar, R.string.exit_message, Snackbar.LENGTH_LONG).show();
 			} catch (Exception ignored) {}
 
 			handler.postDelayed(runnable, 3500);

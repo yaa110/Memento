@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item"
     android:layout_width="match_parent"
     android:layout_height="@dimen/drawer_height"
     android:clickable="true"
     android:background="@drawable/ripple_rect"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <ImageView
         android:id="@+id/icon"
