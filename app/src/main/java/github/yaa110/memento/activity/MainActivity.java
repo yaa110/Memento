@@ -1,7 +1,9 @@
-package github.yaa110.memento;
+package github.yaa110.memento.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import github.yaa110.memento.R;
 
 public class MainActivity extends AppCompatActivity {
 
