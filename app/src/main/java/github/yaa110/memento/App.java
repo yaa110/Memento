@@ -10,8 +10,10 @@ public class App extends Application {
 	public static App instance;
 
 	/* Preferences */
+	public static boolean smartFab;
 
 	/* Preferences' Keys */
+	public static final String SMART_FAB_KEY = "k1";
 
 	private SharedPreferences prefs;
 
@@ -20,6 +22,7 @@ public class App extends Application {
 		super.onCreate();
 
 		prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+		smartFab = prefs.getBoolean(SMART_FAB_KEY, true);
 
 		instance = this;
 	}

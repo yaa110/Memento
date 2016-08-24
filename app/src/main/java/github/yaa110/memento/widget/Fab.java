@@ -5,6 +5,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.View;
 
+import github.yaa110.memento.App;
 import github.yaa110.memento.R;
 import github.yaa110.memento.inner.Animator;
 
@@ -34,7 +35,7 @@ public class Fab extends AppCompatImageView {
 	}
 
 	public void hide() {
-		if (!isHidden) {
+		if (App.smartFab && !isHidden) {
 			isHidden = true;
 			Animator.create(getContext().getApplicationContext())
 				.on(this)
