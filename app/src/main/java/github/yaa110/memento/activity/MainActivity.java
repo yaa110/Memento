@@ -3,12 +3,11 @@ package github.yaa110.memento.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
 import android.widget.TextView;
 
-import github.yaa110.memento.App;
 import github.yaa110.memento.R;
 import github.yaa110.memento.fragment.MainFragment;
+import github.yaa110.memento.inner.Formatter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 		setSupportActionBar(toolbar);
 
 		// Set date in drawer
-		((TextView) findViewById(R.id.drawer_date)).setText(DateFormat.format(App.DATE_FORMAT, System.currentTimeMillis()));
+		((TextView) findViewById(R.id.drawer_date)).setText(Formatter.formatDate());
 
 		try {
 			//noinspection ConstantConditions

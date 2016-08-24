@@ -4,6 +4,7 @@
     <color name="main_color_dark">#229b60</color>
 
     <color name="white">#ffffff</color>
+    <color name="transparent_white">#bbffffff</color>
     <color name="black">#000000</color>
 
     <color name="ripple_dark">#1dffffff</color>
