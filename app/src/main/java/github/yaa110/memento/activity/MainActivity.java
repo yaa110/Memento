@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import github.yaa110.memento.R;
 import github.yaa110.memento.adapter.DrawerAdapter;
-import github.yaa110.memento.fragment.MainFragment;
+import github.yaa110.memento.fragment.CategoryFragment;
 import github.yaa110.memento.inner.Formatter;
 import github.yaa110.memento.model.Drawer;
 
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 	public View drawerHolder;
 	private boolean exitStatus = false;
 
-	private MainFragment fragment;
+	private CategoryFragment fragment;
 
 	public Handler handler = new Handler();
 	public Runnable runnable = new Runnable() {
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 		setupDrawer();
 
 		if (savedInstanceState == null) {
-			fragment = new MainFragment();
+			fragment = new CategoryFragment();
 
 			getSupportFragmentManager().beginTransaction()
 				.add(R.id.container, fragment)

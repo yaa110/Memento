@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="main_color">#33ac71</color>
-    <color name="main_color_dark">#229b60</color>
+    <color name="main_color_dark">#247950</color>
+
+    <color name="light_green">#D9F7DA</color>
 
     <color name="white">#ffffff</color>
     <color name="transparent_white">#bbffffff</color>

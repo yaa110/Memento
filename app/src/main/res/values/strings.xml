@@ -7,4 +7,7 @@
     <string name="trash">Trash</string>
     <string name="exit_message">Press again to exit</string>
     <string name="new_category">New category</string>
+    <string name="empty">empty</string>
+    <string name="no_categories">No categories found!</string>
+    <string name="no_categories_desc">Create a new category to start \ntaking notes</string>
 </resources>
