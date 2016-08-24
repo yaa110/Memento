@@ -5,9 +5,8 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import github.yaa110.bilan.App;
-import github.yaa110.bilan.R;
-import github.yaa110.bilan.library.Animator;
+import github.yaa110.memento.R;
+import github.yaa110.memento.inner.Animator;
 
 public class Fab extends AppCompatImageView {
 	private boolean isHidden = false;
@@ -35,7 +34,7 @@ public class Fab extends AppCompatImageView {
 	}
 
 	public void hide() {
-		if (App.floating_btn && !isHidden) {
+		if (!isHidden) {
 			isHidden = true;
 			Animator.create(getContext().getApplicationContext())
 				.on(this)
