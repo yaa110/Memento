@@ -1,5 +1,6 @@
 package github.yaa110.memento.model;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import java.util.ArrayList;
@@ -15,16 +16,50 @@ public class Note extends DatabaseModel {
 
 	public Note() {}
 
+	/**
+	 * Instantiates a new object of Note class using the data retrieved from database.
+	 * @param c cursor object returned from a database query
+	 */
 	public Note(Cursor c) {
 		super(c);
 		this.categoryId = c.getLong(c.getColumnIndex(OpenHelper.COLUMN_PARENT_ID));
 		this.body = c.getString(c.getColumnIndex(OpenHelper.COLUMN_BODY));
 	}
 
+	/**
+	 * @return ContentValue object to be saved or updated
+	 */
+	@Override
+	public ContentValues getContentValues() {
+		ContentValues values = new ContentValues();
+
+		if (id == DatabaseModel.NEW_MODEL_ID) {
+			values.put(OpenHelper.COLUMN_TYPE, type);
+			values.put(OpenHelper.COLUMN_DATE, createdAt);
+			values.put(OpenHelper.COLUMN_ARCHIVED, isArchived);
+			values.put(OpenHelper.COLUMN_PARENT_ID, categoryId);
+		}
+
+		values.put(OpenHelper.COLUMN_TITLE, title);
+		values.put(OpenHelper.COLUMN_BODY, body);
+
+		return values;
+	}
+
+	/**
+	 * Reads a note by its id
+	 * @param id primary key of note
+	 * @return the note object or null if it was not found
+	 */
 	public static Note find(long id) {
 		return Controller.instance.findNote(Note.class, id);
 	}
 
+	/**
+	 * Reads all notes
+	 * @param items a list of notes which is populated by database
+	 * @param isArchived determines if the note is archived
+	 */
 	public static void all(ArrayList<Note> items, boolean isArchived) {
 		Controller.instance.findNotes(
 			Note.class,

@@ -1,5 +1,6 @@
 package github.yaa110.memento.model;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.graphics.Color;
 
@@ -40,20 +41,58 @@ public class Category extends DatabaseModel {
 
 	public Category() {}
 
+	/**
+	 * Instantiates a new object of Category class using the data retrieved from database.
+	 * @param c cursor object returned from a database query
+	 */
 	public Category(Cursor c) {
 		super(c);
 		this.theme = c.getInt(c.getColumnIndex(OpenHelper.COLUMN_THEME));
 		this.counter = c.getInt(c.getColumnIndex(OpenHelper.COLUMN_COUNTER));
 	}
 
+	/**
+	 * @return ContentValue object to be saved or updated
+	 */
+	@Override
+	public ContentValues getContentValues() {
+		ContentValues values = new ContentValues();
+
+		if (id == DatabaseModel.NEW_MODEL_ID) {
+			values.put(OpenHelper.COLUMN_TYPE, type);
+			values.put(OpenHelper.COLUMN_DATE, createdAt);
+			values.put(OpenHelper.COLUMN_COUNTER, counter);
+			values.put(OpenHelper.COLUMN_ARCHIVED, isArchived);
+		}
+
+		values.put(OpenHelper.COLUMN_TITLE, title);
+		values.put(OpenHelper.COLUMN_THEME, theme);
+
+		return values;
+	}
+
+
+	/**
+	 * @return color of the theme
+	 */
 	public int getThemeColor() {
 		return Color.parseColor(colors[theme]);
 	}
 
+	/**
+	 * Reads a category by its id
+	 * @param id primary key of category
+	 * @return the category object or null if it was not found
+	 */
 	public static Category find(long id) {
 		return Controller.instance.findNote(Category.class, id);
 	}
 
+	/**
+	 * Reads all categories
+	 * @param items a list of categories which is populated by database
+	 * @param isArchived determines if the category is archived
+	 */
 	public static void all(ArrayList<Category> items, boolean isArchived) {
 		Controller.instance.findNotes(
 			Category.class,
