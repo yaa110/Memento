@@ -28,4 +28,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile "com.android.support:recyclerview-v7:24.1.1"
     compile "com.android.support:design:24.1.1"
+    compile 'com.afollestad.material-dialogs:core:0.9.0.1'
 }
