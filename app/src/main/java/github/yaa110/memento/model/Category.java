@@ -3,6 +3,11 @@ package github.yaa110.memento.model;
 import android.database.Cursor;
 import android.graphics.Color;
 
+import java.util.ArrayList;
+import java.util.Locale;
+
+import github.yaa110.memento.App;
+import github.yaa110.memento.db.Controller;
 import github.yaa110.memento.db.OpenHelper;
 
 public class Category extends DatabaseModel {
@@ -35,7 +40,7 @@ public class Category extends DatabaseModel {
 
 	public Category() {}
 
-	public Category(Cursor c, boolean isArchived) {
+	public Category(Cursor c) {
 		this.id = c.getLong(c.getColumnIndex(OpenHelper.COLUMN_ID));
 		this.type = DatabaseModel.TYPE_CATEGORY;
 		this.title = c.getString(c.getColumnIndex(OpenHelper.COLUMN_TITLE));
@@ -44,12 +49,33 @@ public class Category extends DatabaseModel {
 		} catch (NumberFormatException nfe) {
 			this.createdAt = 0;
 		}
-		this.isArchived = isArchived;
+		this.isArchived = c.getInt(c.getColumnIndex(OpenHelper.COLUMN_ARCHIVED)) == 1;
 		this.theme = c.getInt(c.getColumnIndex(OpenHelper.COLUMN_THEME));
 		this.counter = c.getInt(c.getColumnIndex(OpenHelper.COLUMN_COUNTER));
 	}
 
 	public int getThemeColor() {
 		return Color.parseColor(colors[theme]);
+	}
+
+	public static void all(ArrayList<Category> items, boolean isArchived) {
+		Controller.instance.findNotes(
+			Category.class,
+			items,
+			new String[] {
+				OpenHelper.COLUMN_ID,
+				OpenHelper.COLUMN_TITLE,
+				OpenHelper.COLUMN_THEME,
+				OpenHelper.COLUMN_DATE,
+				OpenHelper.COLUMN_ARCHIVED,
+				OpenHelper.COLUMN_COUNTER
+			},
+			OpenHelper.COLUMN_TYPE + " = ? AND " + OpenHelper.COLUMN_ARCHIVED + " = ?",
+			new String[]{
+				String.format(Locale.US, "%d", DatabaseModel.TYPE_CATEGORY),
+				isArchived ? "1" : "0"
+			},
+			App.sortCategoriesBy
+		);
 	}
 }

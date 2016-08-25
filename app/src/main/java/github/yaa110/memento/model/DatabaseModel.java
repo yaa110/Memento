@@ -1,5 +1,9 @@
 package github.yaa110.memento.model;
 
+import android.database.Cursor;
+
+import github.yaa110.memento.db.Controller;
+
 public class DatabaseModel {
 	public static final int TYPE_CATEGORY = 0;
 	public static final int TYPE_NOTE_SIMPLE = 1;
@@ -10,4 +14,12 @@ public class DatabaseModel {
 	public String title;
 	public long createdAt;
 	public boolean isArchived;
+
+	public DatabaseModel() {}
+
+	public DatabaseModel(Cursor c) {}
+
+	public boolean delete() {
+		return Controller.instance.deleteNote(id);
+	}
 }

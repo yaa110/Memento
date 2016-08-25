@@ -8,10 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import github.yaa110.memento.App;
-import github.yaa110.memento.model.Category;
 import github.yaa110.memento.model.DatabaseModel;
 
+@SuppressWarnings("TryFinallyCanBeTryWithResources")
 public class Controller {
 	public static final int SORT_TITLE_ASC = 0;
 	public static final int SORT_TITLE_DESC = 1;
@@ -36,7 +35,7 @@ public class Controller {
 		instance = new Controller(context);
 	}
 
-	public void findCategories(ArrayList<Category> items) {
+	public <T extends DatabaseModel> void findNotes(Class<T> cls, ArrayList<T> items, String[] columns, String where, String[] whereParams, int sortId) {
 		if (items == null) {
 			items = new ArrayList<>();
 		} else {
@@ -45,33 +44,42 @@ public class Controller {
 
 		SQLiteDatabase db = helper.getReadableDatabase();
 
-		//noinspection TryFinallyCanBeTryWithResources
 		try {
 			Cursor c = db.query(
 				OpenHelper.TABLE_NOTES,
-				new String[] {
-					OpenHelper.COLUMN_ID,
-					OpenHelper.COLUMN_TITLE,
-					OpenHelper.COLUMN_THEME,
-					OpenHelper.COLUMN_DATE,
-					OpenHelper.COLUMN_COUNTER
-				},
-				OpenHelper.COLUMN_TYPE + " = ? AND " + OpenHelper.COLUMN_ARCHIVED + " = ?",
-				new String[]{
-					String.format(Locale.US, "%d", DatabaseModel.TYPE_CATEGORY),
-					"0"
-				},
+				columns,
+				where,
+				whereParams,
 				null, null,
-				sorts[App.sortCategoriesBy]
+				sorts[sortId]
 			);
 
 			if (c == null) return;
 
 			while (c.moveToNext()) {
-				items.add(new Category(c, false));
+				try {
+					items.add(cls.getDeclaredConstructor(Cursor.class).newInstance(c));
+				} catch (Exception ignored) {
+				}
 			}
 
 			c.close();
+		} finally {
+			db.close();
+		}
+	}
+
+	public boolean deleteNote(long id) {
+		SQLiteDatabase db = helper.getWritableDatabase();
+
+		try {
+			return db.delete(
+				OpenHelper.TABLE_NOTES,
+				OpenHelper.COLUMN_ID + " = ?",
+				new String[] {
+					String.format(Locale.US, "%d", id)
+				}
+			) > 0;
 		} finally {
 			db.close();
 		}
