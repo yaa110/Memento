@@ -69,6 +69,36 @@ public class Controller {
 		}
 	}
 
+	public <T extends DatabaseModel> T findNote(Class<T> cls, long id) {
+		SQLiteDatabase db = helper.getReadableDatabase();
+
+		try {
+			Cursor c = db.query(
+				OpenHelper.TABLE_NOTES,
+				null,
+				OpenHelper.COLUMN_ID + " = ?",
+				new String[] {
+					String.format(Locale.US, "%d", id)
+				},
+				null, null, null
+			);
+
+			if (c == null) return null;
+
+			if (c.moveToFirst()) {
+				try {
+					return cls.getDeclaredConstructor(Cursor.class).newInstance(c);
+				} catch (Exception e) {
+					return null;
+				}
+			}
+
+			return null;
+		} finally {
+			db.close();
+		}
+	}
+
 	public boolean deleteNote(long id) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -84,4 +114,5 @@ public class Controller {
 			db.close();
 		}
 	}
+
 }

@@ -41,21 +41,17 @@ public class Category extends DatabaseModel {
 	public Category() {}
 
 	public Category(Cursor c) {
-		this.id = c.getLong(c.getColumnIndex(OpenHelper.COLUMN_ID));
-		this.type = DatabaseModel.TYPE_CATEGORY;
-		this.title = c.getString(c.getColumnIndex(OpenHelper.COLUMN_TITLE));
-		try {
-			this.createdAt = Long.parseLong(c.getString(c.getColumnIndex(OpenHelper.COLUMN_DATE)));
-		} catch (NumberFormatException nfe) {
-			this.createdAt = 0;
-		}
-		this.isArchived = c.getInt(c.getColumnIndex(OpenHelper.COLUMN_ARCHIVED)) == 1;
+		super(c);
 		this.theme = c.getInt(c.getColumnIndex(OpenHelper.COLUMN_THEME));
 		this.counter = c.getInt(c.getColumnIndex(OpenHelper.COLUMN_COUNTER));
 	}
 
 	public int getThemeColor() {
 		return Color.parseColor(colors[theme]);
+	}
+
+	public static Category find(long id) {
+		return Controller.instance.findNote(Category.class, id);
 	}
 
 	public static void all(ArrayList<Category> items, boolean isArchived) {
@@ -65,9 +61,10 @@ public class Category extends DatabaseModel {
 			new String[] {
 				OpenHelper.COLUMN_ID,
 				OpenHelper.COLUMN_TITLE,
-				OpenHelper.COLUMN_THEME,
 				OpenHelper.COLUMN_DATE,
+				OpenHelper.COLUMN_TYPE,
 				OpenHelper.COLUMN_ARCHIVED,
+				OpenHelper.COLUMN_THEME,
 				OpenHelper.COLUMN_COUNTER
 			},
 			OpenHelper.COLUMN_TYPE + " = ? AND " + OpenHelper.COLUMN_ARCHIVED + " = ?",
