@@ -14,10 +14,11 @@ import android.widget.TextView;
 import github.yaa110.memento.R;
 import github.yaa110.memento.adapter.DrawerAdapter;
 import github.yaa110.memento.fragment.CategoryFragment;
+import github.yaa110.memento.fragment.template.RecyclerFragment;
 import github.yaa110.memento.inner.Formatter;
 import github.yaa110.memento.model.Drawer;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerFragment.Callbacks {
 	private DrawerLayout drawerLayout;
 	public View drawerHolder;
 	private boolean exitStatus = false;

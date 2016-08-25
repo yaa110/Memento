@@ -1,5 +1,6 @@
 package github.yaa110.memento.fragment.template;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 	private A adapter;
 	private ArrayList<T> items;
 	private ArrayList<T> selected;
+	private Callbacks activity;
 
 	@Nullable
 	@Override
@@ -39,14 +41,22 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 		empty = view.findViewById(R.id.empty);
 
 		Intent data = getActivity().getIntent();
-		if (data != null) handleData(view, data);
+		if (data != null) {
+			// TODO get category id for showing notes
+		}
 
-
+		// TODO getItems and display
 	}
 
-	private void handleData(View view, Intent data) {
-		// TODO
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		this.activity = (Callbacks) context;
 	}
 
 	public abstract int getLayout();
+
+	public interface Callbacks {
+		// TODO
+	}
 }
