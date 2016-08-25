@@ -10,5 +10,4 @@ public class DatabaseModel {
 	public String title;
 	public long createdAt;
 	public boolean isArchived;
-	public boolean isDeleted;
 }
