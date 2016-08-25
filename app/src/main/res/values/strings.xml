@@ -4,7 +4,6 @@
     <string name="settings">Preferences</string>
     <string name="about">About</string>
     <string name="archived">Archived notes</string>
-    <string name="trash">Trash</string>
     <string name="exit_message">Press again to exit</string>
     <string name="new_category">New category</string>
     <string name="empty">empty</string>

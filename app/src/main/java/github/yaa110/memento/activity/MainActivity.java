@@ -136,9 +136,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 						case Drawer.TYPE_ARCHIVED:
 							// TODO archived drawer
 							break;
-						case Drawer.TYPE_DELETED:
-							// TODO trash drawer
-							break;
 						case Drawer.TYPE_SETTINGS:
 							// TODO settings drawer
 							break;
