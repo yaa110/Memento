@@ -45,24 +45,35 @@ public class Controller {
 
 		SQLiteDatabase db = helper.getReadableDatabase();
 
-		Cursor c = db.query(
-			OpenHelper.TABLE_NOTES,
-			new String[] {
-				OpenHelper.COLUMN_ID,
-				OpenHelper.COLUMN_TITLE,
-				OpenHelper.COLUMN_THEME,
-				OpenHelper.COLUMN_DATE,
-				OpenHelper.COLUMN_COUNTER
-			},
-			OpenHelper.COLUMN_TYPE + " = ? AND " + OpenHelper.COLUMN_ARCHIVED + " = ?",
-			new String[]{
-				String.format(Locale.US, "%d", DatabaseModel.TYPE_CATEGORY),
-				"0"
-			},
-			null, null,
-			sorts[App.sortCategoriesBy]
-		);
+		//noinspection TryFinallyCanBeTryWithResources
+		try {
+			Cursor c = db.query(
+				OpenHelper.TABLE_NOTES,
+				new String[] {
+					OpenHelper.COLUMN_ID,
+					OpenHelper.COLUMN_TITLE,
+					OpenHelper.COLUMN_THEME,
+					OpenHelper.COLUMN_DATE,
+					OpenHelper.COLUMN_COUNTER
+				},
+				OpenHelper.COLUMN_TYPE + " = ? AND " + OpenHelper.COLUMN_ARCHIVED + " = ?",
+				new String[]{
+					String.format(Locale.US, "%d", DatabaseModel.TYPE_CATEGORY),
+					"0"
+				},
+				null, null,
+				sorts[App.sortCategoriesBy]
+			);
 
-		db.close();
+			if (c == null) return;
+
+			while (c.moveToNext()) {
+				items.add(new Category(c, false));
+			}
+
+			c.close();
+		} finally {
+			db.close();
+		}
 	}
 }

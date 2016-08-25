@@ -1,6 +1,5 @@
 package github.yaa110.memento.widget;
 
-import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
@@ -28,7 +27,7 @@ public class CategoryViewHolder extends ModelViewHolder<Category> {
 	@Override
 	public void populate(Category item) {
 		badge.setText(item.title.substring(0, 1));
-		badge.setBackgroundColor(Color.parseColor(Category.COLORS[item.theme]));
+		badge.setBackgroundColor(item.getThemeColor());
 		title.setText(item.title);
 		if (item.counter == 0) counter.setText("");
 		else if (item.counter == 1) counter.setText(R.string.one_note);
