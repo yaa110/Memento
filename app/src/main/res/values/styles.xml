@@ -1,9 +1,21 @@
 <resources>
 
+    <declare-styleable name="Fab">
+        <attr name="fabColor" format="reference" />
+    </declare-styleable>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/main_color</item>
         <item name="colorPrimaryDark">@color/main_color_dark</item>
-        <item name="colorAccent">@color/main_color</item>
+        <item name="colorAccent">@color/green_light</item>
+        <item name="fabColor">@drawable/fab</item>
+    </style>
+
+    <style name="AppThemeRed" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryDark">@color/red_dark</item>
+        <item name="colorAccent">@color/red_light</item>
+        <item name="fabColor">@drawable/fab_red</item>
     </style>
 
 </resources>

@@ -21,7 +21,6 @@ public class Category extends DatabaseModel {
 	public static final int THEME_GREAN     = 6;
 	public static final int THEME_AMBER     = 7;
 	public static final int THEME_ORANGE    = 8;
-	public static final int THEME_BLUE_GRAY = 9;
 
 	private String[] colors = {
 		"#F44336",
@@ -33,7 +32,6 @@ public class Category extends DatabaseModel {
 		"#4CAF50",
 		"#FFA000",
 		"#FF5722",
-		"#607D8B"
 	};
 
 	public int theme;

@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_height="@dimen/toolbar_height"
             android:layout_width="match_parent"
-            android:background="@color/main_color"
+            android:background="?attr/colorPrimary"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp">
 
@@ -32,7 +32,7 @@
                 android:contentDescription="@string/menu"/>
 
             <TextView
-                android:id="@+id/activity_title"
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"

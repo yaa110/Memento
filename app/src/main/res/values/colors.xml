@@ -3,7 +3,41 @@
     <color name="main_color">#33ac71</color>
     <color name="main_color_dark">#247950</color>
 
-    <color name="light_green">#D9F7DA</color>
+    <color name="red_dark">#D32F2F</color>
+    <color name="red">#F44336</color>
+    <color name="red_light">#FFCDD2</color>
+
+    <color name="pink_dark">#C2185B</color>
+    <color name="pink">#E91E63</color>
+    <color name="pink_light">#F8BBD0</color>
+
+    <color name="purple_dark">#7B1FA2</color>
+    <color name="purple">#9C27B0</color>
+    <color name="purple_light">#F2CFF8</color>
+
+    <color name="blue_dark">#1976D2</color>
+    <color name="blue">#2196F3</color>
+    <color name="blue_light">#BBDEFB</color>
+
+    <color name="cyan_dark">#0097A7</color>
+    <color name="cyan">#00BCD4</color>
+    <color name="cyan_light">#B2EBF2</color>
+
+    <color name="teal_dark">#00796B</color>
+    <color name="teal">#009688</color>
+    <color name="teal_light">#B2DFDB</color>
+
+    <color name="green_dark">#388E3C</color>
+    <color name="green">#4CAF50</color>
+    <color name="green_light">#D9F7DA</color>
+
+    <color name="amber_dark">#FFA000</color>
+    <color name="amber">#FFC107</color>
+    <color name="amber_light">#FFECB3</color>
+
+    <color name="orange_dark">#E64A19</color>
+    <color name="orange">#FF5722</color>
+    <color name="orange_light">#FFE0B2</color>
 
     <color name="white">#ffffff</color>
     <color name="transparent_white">#bbffffff</color>

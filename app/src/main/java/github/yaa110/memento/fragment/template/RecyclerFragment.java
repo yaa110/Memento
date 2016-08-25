@@ -9,11 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import github.yaa110.memento.R;
 import github.yaa110.memento.adapter.template.ModelAdapter;
+import github.yaa110.memento.db.OpenHelper;
+import github.yaa110.memento.model.Category;
 import github.yaa110.memento.model.DatabaseModel;
 
 abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelAdapter> extends Fragment {
@@ -22,9 +25,13 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 	private View empty;
 
 	private A adapter;
-	private ArrayList<T> items;
+	private ArrayList<T> items = null;
 	private ArrayList<T> selected;
 	private Callbacks activity;
+
+	public long categoryId;
+	public int categoryTheme;
+	public String categoryTitle;
 
 	@Nullable
 	@Override
@@ -42,7 +49,14 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 
 		Intent data = getActivity().getIntent();
 		if (data != null) {
-			// TODO get category id for showing notes
+			// Get the parent data
+			categoryId = data.getLongExtra(OpenHelper.COLUMN_ID, DatabaseModel.NEW_MODEL_ID);
+			categoryTheme = data.getIntExtra(OpenHelper.COLUMN_THEME, Category.THEME_GREAN);
+			categoryTitle = data.getStringExtra(OpenHelper.COLUMN_TITLE);
+
+			if (categoryTitle != null) {
+				((TextView) getActivity().findViewById(R.id.title)).setText(categoryTitle);
+			}
 		}
 
 		// TODO getItems and display

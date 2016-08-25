@@ -20,9 +20,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         android:gravity="center"
-        android:background="@color/light_green"
+        android:background="?attr/colorAccent"
         android:orientation="vertical"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -65,7 +65,7 @@
         app:layout_anchor="@+id/recyclerView"
         app:layout_anchorGravity="bottom|end"
         android:clickable="true"
-        android:background="@drawable/fab"
+        android:background="?attr/fabColor"
         app:srcCompat="@drawable/fab_add_category"
         android:contentDescription="@string/new_category"
         android:layout_gravity="end|bottom"
