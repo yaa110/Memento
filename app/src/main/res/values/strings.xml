@@ -12,4 +12,9 @@
     <string name="no_notes_hint">No notes</string>
     <string name="one_note">1 note</string>
     <string name="counter_note">%1$d notes</string>
+    <string name="title">Title</string>
+    <string name="choose_a_color">Choose a color:</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="theme">theme</string>
 </resources>

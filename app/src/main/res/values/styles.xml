@@ -7,70 +7,70 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/main_color</item>
         <item name="colorPrimaryDark">@color/main_color_dark</item>
-        <item name="colorAccent">@color/green_light</item>
+        <item name="colorAccent">@color/main_color</item>
         <item name="fabColor">@drawable/fab</item>
     </style>
 
     <style name="AppThemeRed" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/red</item>
         <item name="colorPrimaryDark">@color/red_dark</item>
-        <item name="colorAccent">@color/red_light</item>
+        <item name="colorAccent">@color/red</item>
         <item name="fabColor">@drawable/fab_red</item>
     </style>
 
     <style name="AppThemePink" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/pink</item>
         <item name="colorPrimaryDark">@color/pink_dark</item>
-        <item name="colorAccent">@color/pink_light</item>
+        <item name="colorAccent">@color/pink</item>
         <item name="fabColor">@drawable/fab_pink</item>
     </style>
 
     <style name="AppThemePurple" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/purple</item>
         <item name="colorPrimaryDark">@color/purple_dark</item>
-        <item name="colorAccent">@color/purple_light</item>
+        <item name="colorAccent">@color/purple</item>
         <item name="fabColor">@drawable/fab_purple</item>
     </style>
 
     <style name="AppThemeBlue" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryDark">@color/blue_dark</item>
-        <item name="colorAccent">@color/blue_light</item>
+        <item name="colorAccent">@color/blue</item>
         <item name="fabColor">@drawable/fab_blue</item>
     </style>
 
     <style name="AppThemeCyan" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/cyan</item>
         <item name="colorPrimaryDark">@color/cyan_dark</item>
-        <item name="colorAccent">@color/cyan_light</item>
+        <item name="colorAccent">@color/cyan</item>
         <item name="fabColor">@drawable/fab_cyan</item>
     </style>
     
     <style name="AppThemeTeal" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/teal</item>
         <item name="colorPrimaryDark">@color/teal_dark</item>
-        <item name="colorAccent">@color/teal_light</item>
+        <item name="colorAccent">@color/teal</item>
         <item name="fabColor">@drawable/fab_teal</item>
     </style>
     
     <style name="AppThemeGreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryDark">@color/green_dark</item>
-        <item name="colorAccent">@color/green_light</item>
+        <item name="colorAccent">@color/green</item>
         <item name="fabColor">@drawable/fab_green</item>
     </style>
     
     <style name="AppThemeAmber" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/amber</item>
         <item name="colorPrimaryDark">@color/amber_dark</item>
-        <item name="colorAccent">@color/amber_light</item>
+        <item name="colorAccent">@color/amber</item>
         <item name="fabColor">@drawable/fab_amber</item>
     </style>
 
     <style name="AppThemeOrange" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/orange</item>
         <item name="colorPrimaryDark">@color/orange_dark</item>
-        <item name="colorAccent">@color/orange_light</item>
+        <item name="colorAccent">@color/orange</item>
         <item name="fabColor">@drawable/fab_orange</item>
     </style>
 
