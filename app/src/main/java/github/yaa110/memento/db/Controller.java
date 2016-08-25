@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import github.yaa110.memento.App;
+import github.yaa110.memento.model.Category;
 import github.yaa110.memento.model.DatabaseModel;
 import github.yaa110.memento.model.Note;
 
@@ -47,19 +49,15 @@ public class Controller {
 	/**
 	 * Reads all notes or categories from database
 	 * @param cls the class of the model type
-	 * @param items an array which is populated by the data retrieved from database
 	 * @param columns the columns must be returned from the query
 	 * @param where the where clause of the query.
 	 * @param whereParams the parameters of where clause.
 	 * @param sortId the sort id of categories or notes
 	 * @param <T> a type which extends DatabaseModel
+	 * @return a list of notes or categories
 	 */
-	public <T extends DatabaseModel> void findNotes(Class<T> cls, ArrayList<T> items, String[] columns, String where, String[] whereParams, int sortId) {
-		if (items == null) {
-			items = new ArrayList<>();
-		} else {
-			items.clear();
-		}
+	public <T extends DatabaseModel> ArrayList<T> findNotes(Class<T> cls, String[] columns, String where, String[] whereParams, int sortId) {
+		ArrayList<T> items = new ArrayList<>();
 
 		SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -73,16 +71,18 @@ public class Controller {
 				sorts[sortId]
 			);
 
-			if (c == null) return;
-
-			while (c.moveToNext()) {
-				try {
-					items.add(cls.getDeclaredConstructor(Cursor.class).newInstance(c));
-				} catch (Exception ignored) {
+			if (c != null) {
+				while (c.moveToNext()) {
+					try {
+						items.add(cls.getDeclaredConstructor(Cursor.class).newInstance(c));
+					} catch (Exception ignored) {
+					}
 				}
+
+				c.close();
 			}
 
-			c.close();
+			return items;
 		} finally {
 			db.close();
 		}

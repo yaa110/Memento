@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 	private boolean exitStatus = false;
 
 	private CategoryFragment fragment;
+	private Toolbar toolbar;
 
 	public Handler handler = new Handler();
 	public Runnable runnable = new Runnable() {
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
 		try {
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 			exitStatus = true;
 
 			try {
-				Snackbar.make(fragment.fab, R.string.exit_message, Snackbar.LENGTH_LONG).show();
+				Snackbar.make(fragment.fab != null ? fragment.fab : toolbar, R.string.exit_message, Snackbar.LENGTH_LONG).show();
 			} catch (Exception ignored) {}
 
 			handler.postDelayed(runnable, 3500);

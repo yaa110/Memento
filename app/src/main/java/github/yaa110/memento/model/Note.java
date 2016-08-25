@@ -57,13 +57,12 @@ public class Note extends DatabaseModel {
 
 	/**
 	 * Reads all notes
-	 * @param items a list of notes which is populated by database
-	 * @param isArchived determines if the note is archived
+	 * @param categoryId the id of parent category
+	 * @return a list of notes which is populated by database
 	 */
-	public static void all(ArrayList<Note> items, boolean isArchived) {
-		Controller.instance.findNotes(
+	public static ArrayList<Note> all(long categoryId) {
+		return Controller.instance.findNotes(
 			Note.class,
-			items,
 			new String[] {
 				OpenHelper.COLUMN_ID,
 				OpenHelper.COLUMN_TITLE,
@@ -73,10 +72,11 @@ public class Note extends DatabaseModel {
 				OpenHelper.COLUMN_PARENT_ID,
 				OpenHelper.COLUMN_BODY
 			},
-			OpenHelper.COLUMN_TYPE + " != ? AND " + OpenHelper.COLUMN_ARCHIVED + " = ?",
+			OpenHelper.COLUMN_TYPE + " != ? AND " + OpenHelper.COLUMN_PARENT_ID + " = ? AND " + OpenHelper.COLUMN_ARCHIVED + " = ?",
 			new String[]{
 				String.format(Locale.US, "%d", DatabaseModel.TYPE_CATEGORY),
-				isArchived ? "1" : "0"
+				String.format(Locale.US, "%d", categoryId),
+				"0"
 			},
 			App.sortNotesBy
 		);

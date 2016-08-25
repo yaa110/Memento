@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import github.yaa110.memento.App;
+import github.yaa110.memento.R;
 import github.yaa110.memento.db.Controller;
 import github.yaa110.memento.db.OpenHelper;
 
@@ -18,7 +19,7 @@ public class Category extends DatabaseModel {
 	public static final int THEME_BLUE      = 3;
 	public static final int THEME_CYAN      = 4;
 	public static final int THEME_TEAL      = 5;
-	public static final int THEME_GREAN     = 6;
+	public static final int THEME_GREEN     = 6;
 	public static final int THEME_AMBER     = 7;
 	public static final int THEME_ORANGE    = 8;
 
@@ -78,6 +79,35 @@ public class Category extends DatabaseModel {
 	}
 
 	/**
+	 * @param theme the color id of category
+	 * @return the style of theme
+	 */
+	public static int getStyle(int theme) {
+		switch (theme) {
+			case THEME_RED:
+				return R.style.AppThemeRed;
+			case THEME_PINK:
+				return R.style.AppThemePink;
+			case THEME_AMBER:
+				return R.style.AppThemeAmber;
+			case THEME_BLUE:
+				return R.style.AppThemeBlue;
+			case THEME_CYAN:
+				return R.style.AppThemeCyan;
+			case THEME_GREEN:
+				return R.style.AppThemeGreen;
+			case THEME_ORANGE:
+				return R.style.AppThemeOrange;
+			case THEME_PURPLE:
+				return R.style.AppThemePurple;
+			case THEME_TEAL:
+				return R.style.AppThemeTeal;
+		}
+
+		return R.style.AppTheme;
+	}
+
+	/**
 	 * Reads a category by its id
 	 * @param id primary key of category
 	 * @return the category object or null if it was not found
@@ -88,13 +118,11 @@ public class Category extends DatabaseModel {
 
 	/**
 	 * Reads all categories
-	 * @param items a list of categories which is populated by database
-	 * @param isArchived determines if the category is archived
+	 * @return a list of categories which is populated by database
 	 */
-	public static void all(ArrayList<Category> items, boolean isArchived) {
-		Controller.instance.findNotes(
+	public static ArrayList<Category> all() {
+		return Controller.instance.findNotes(
 			Category.class,
-			items,
 			new String[] {
 				OpenHelper.COLUMN_ID,
 				OpenHelper.COLUMN_TITLE,
@@ -107,7 +135,7 @@ public class Category extends DatabaseModel {
 			OpenHelper.COLUMN_TYPE + " = ? AND " + OpenHelper.COLUMN_ARCHIVED + " = ?",
 			new String[]{
 				String.format(Locale.US, "%d", DatabaseModel.TYPE_CATEGORY),
-				isArchived ? "1" : "0"
+				"0"
 			},
 			App.sortCategoriesBy
 		);
