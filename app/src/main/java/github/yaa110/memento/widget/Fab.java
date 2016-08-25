@@ -24,6 +24,9 @@ public class Fab extends AppCompatImageView {
 		super(context, attrs, defStyleAttr);
 	}
 
+	/**
+	 * Makes the fab visible if it is hidden
+	 */
 	public void show() {
 		if (isHidden) {
 			isHidden = false;
@@ -34,6 +37,9 @@ public class Fab extends AppCompatImageView {
 		}
 	}
 
+	/**
+	 * Makes the fab gone if it is visible and smart fab preference is enabled
+	 */
 	public void hide() {
 		if (App.smartFab && !isHidden) {
 			isHidden = true;
