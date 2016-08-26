@@ -260,7 +260,9 @@ public class CategoryFragment extends RecyclerFragment<Category, CategoryAdapter
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CategoryActivity.REQUEST_CODE && resultCode == CategoryActivity.RESULT_CHANGE) {
-			// TODO
+			int position = data.getIntExtra("position", 0);
+			items.get(position).counter = data.getIntExtra(OpenHelper.COLUMN_COUNTER, 0);
+			refreshItem(position);
 		}
 	}
 
