@@ -268,7 +268,7 @@ public class CategoryFragment extends RecyclerFragment<Category, CategoryAdapter
 
 	@Override
 	public int getLayout() {
-		return (R.layout.fragment_category);
+		return (R.layout.fragment_main);
 	}
 
 	@Override
