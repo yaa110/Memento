@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import github.yaa110.memento.R;
 import github.yaa110.memento.adapter.DrawerAdapter;
-import github.yaa110.memento.fragment.CategoryFragment;
+import github.yaa110.memento.fragment.MainFragment;
 import github.yaa110.memento.fragment.template.RecyclerFragment;
 import github.yaa110.memento.inner.Animator;
 import github.yaa110.memento.inner.Formatter;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 	public View drawerHolder;
 	private boolean exitStatus = false;
 
-	private CategoryFragment fragment;
+	private MainFragment fragment;
 	private Toolbar toolbar;
 	private View selectionEdit;
 
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 		});
 
 		if (savedInstanceState == null) {
-			fragment = new CategoryFragment();
+			fragment = new MainFragment();
 
 			getSupportFragmentManager().beginTransaction()
 				.add(R.id.container, fragment)

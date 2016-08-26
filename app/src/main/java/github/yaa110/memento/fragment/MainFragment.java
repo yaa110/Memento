@@ -20,7 +20,7 @@ import github.yaa110.memento.fragment.template.RecyclerFragment;
 import github.yaa110.memento.model.Category;
 import github.yaa110.memento.model.DatabaseModel;
 
-public class CategoryFragment extends RecyclerFragment<Category, CategoryAdapter> {
+public class MainFragment extends RecyclerFragment<Category, CategoryAdapter> {
 	private int categoryDialogTheme = Category.THEME_GREEN;
 
 	private ModelAdapter.ClickListener listener = new ModelAdapter.ClickListener() {
@@ -47,7 +47,7 @@ public class CategoryFragment extends RecyclerFragment<Category, CategoryAdapter
 		}
 	};
 
-	public CategoryFragment(){}
+	public MainFragment(){}
 
 	@Override
 	public void onClickFab() {

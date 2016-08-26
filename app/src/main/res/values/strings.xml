@@ -7,7 +7,9 @@
     <string name="new_category">New category</string>
     <string name="empty">empty</string>
     <string name="no_categories">No categories found!</string>
-    <string name="no_categories_desc">Create a new category to start \ntaking notes</string>
+    <string name="no_notes">No notes found!</string>
+    <string name="no_categories_desc">Create a new category to start\ntaking notes</string>
+    <string name="no_notes_desc">Start taking notes by creating\na new one</string>
     <string name="no_notes_hint">No notes</string>
     <string name="one_note">1 note</string>
     <string name="counter_note">%1$d notes</string>
@@ -20,4 +22,5 @@
     <string name="edit">Edit</string>
     <string name="undo">Undo</string>
     <string name="back">back</string>
+    <string name="new_note">New note</string>
 </resources>
