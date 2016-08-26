@@ -148,4 +148,9 @@ public class Category extends DatabaseModel {
 			App.sortCategoriesBy
 		);
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		return o != null && o instanceof Category && id == (((Category) o).id);
+	}
 }

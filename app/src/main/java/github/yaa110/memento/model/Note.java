@@ -81,4 +81,9 @@ public class Note extends DatabaseModel {
 			App.sortNotesBy
 		);
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		return o != null && o instanceof Note && id == (((Note) o).id);
+	}
 }

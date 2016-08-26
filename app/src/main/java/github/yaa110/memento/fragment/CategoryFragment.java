@@ -23,19 +23,18 @@ public class CategoryFragment extends RecyclerFragment<Category, CategoryAdapter
 	private ModelAdapter.ClickListener listener = new ModelAdapter.ClickListener() {
 		@Override
 		public void onClick(DatabaseModel item, int position) {
-			categoryDialogTheme = ((Category) item).theme;
-			displayCategoryDialog(
-				R.string.edit_category,
-				R.string.edit,
-				item.title,
-				item.id,
-				position
-			);
+			// TODO open category
 		}
 
 		@Override
 		public void onChangeSelection(boolean haveSelected) {
-			// TODO onChangeSelection
+			toggleSelection(haveSelected);
+		}
+
+		@Override
+		public void onCountSelection(int count) {
+			onChangeCounter(count);
+			activity.toggleOneSelection(count <= 1);
 		}
 	};
 
@@ -53,6 +52,23 @@ public class CategoryFragment extends RecyclerFragment<Category, CategoryAdapter
 		);
 	}
 
+	public void onEditSelected() {
+		if (!selected.isEmpty()) {
+			Category item = selected.remove(0);
+			int position = items.indexOf(item);
+			refreshItem(position);
+			toggleSelection(false);
+			categoryDialogTheme = item.theme;
+			displayCategoryDialog(
+				R.string.edit_category,
+				R.string.edit,
+				item.title,
+				item.id,
+				position
+			);
+		}
+	}
+
 	private void displayCategoryDialog(@StringRes int title, @StringRes int positiveText, final String categoryTitle, final long categoryId, final int position) {
 		MaterialDialog dialog = new MaterialDialog.Builder(getContext())
 			.title(title)
@@ -65,7 +81,7 @@ public class CategoryFragment extends RecyclerFragment<Category, CategoryAdapter
 					//noinspection ConstantConditions
 					String inputTitle = ((EditText) dialog.getCustomView().findViewById(R.id.title_txt)).getText().toString();
 					if (inputTitle.isEmpty()) {
-						inputTitle = "Unnamed";
+						inputTitle = "Untitled";
 					}
 
 					final Category category = new Category();

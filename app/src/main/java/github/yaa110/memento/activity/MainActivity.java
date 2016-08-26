@@ -15,6 +15,7 @@ import github.yaa110.memento.R;
 import github.yaa110.memento.adapter.DrawerAdapter;
 import github.yaa110.memento.fragment.CategoryFragment;
 import github.yaa110.memento.fragment.template.RecyclerFragment;
+import github.yaa110.memento.inner.Animator;
 import github.yaa110.memento.inner.Formatter;
 import github.yaa110.memento.model.Drawer;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 
 	private CategoryFragment fragment;
 	private Toolbar toolbar;
+	private View selectionEdit;
 
 	public Handler handler = new Handler();
 	public Runnable runnable = new Runnable() {
@@ -50,6 +52,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 
 		setupDrawer();
 
+		selectionEdit = findViewById(R.id.selection_edit);
+		selectionEdit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				fragment.onEditSelected();
+			}
+		});
+
 		if (savedInstanceState == null) {
 			fragment = new CategoryFragment();
 
@@ -63,6 +73,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 	public void onBackPressed() {
 		if (drawerLayout.isDrawerOpen(drawerHolder)) {
 			drawerLayout.closeDrawers();
+			return;
+		}
+
+		if (fragment.selectionState) {
+			fragment.toggleSelection(false);
 			return;
 		}
 
@@ -146,5 +161,25 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 				}
 			}
 		}.start();
+	}
+
+	@Override
+	public void onChangeSelection(boolean state) {
+		if (state) {
+			Animator.create(getApplicationContext())
+				.on(toolbar)
+				.setEndVisibility(View.INVISIBLE)
+				.animate(R.anim.fade_out);
+		} else {
+			Animator.create(getApplicationContext())
+				.on(toolbar)
+				.setStartVisibility(View.VISIBLE)
+				.animate(R.anim.fade_in);
+		}
+	}
+
+	@Override
+	public void toggleOneSelection(boolean state) {
+		selectionEdit.setVisibility(state ? View.VISIBLE : View.GONE);
 	}
 }

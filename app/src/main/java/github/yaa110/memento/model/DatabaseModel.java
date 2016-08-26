@@ -19,6 +19,8 @@ abstract public class DatabaseModel {
 	public long createdAt;
 	public boolean isArchived;
 
+	public int position = 0;
+
 	public DatabaseModel() {}
 
 	/**
@@ -46,14 +48,6 @@ abstract public class DatabaseModel {
 	}
 
 	/**
-	 * Deletes a note or category
-	 * @return true if the note is deleted.
- 	 */
-	public boolean delete() {
-		return Controller.instance.deleteNote(this);
-	}
-
-	/**
 	 * 	Toggle archived state and
 	 * 	@return true if the action is completed.
 	 */
@@ -77,5 +71,10 @@ abstract public class DatabaseModel {
 	@Override
 	public int hashCode() {
 		return (int) id;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		return o != null && o instanceof DatabaseModel && id == (((DatabaseModel) o).id);
 	}
 }

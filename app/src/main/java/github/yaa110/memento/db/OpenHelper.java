@@ -33,15 +33,15 @@ public class OpenHelper extends SQLiteOpenHelper {
 		db.execSQL(
 			"CREATE TABLE IF NOT EXISTS " + TABLE_NOTES + " (" +
 				COLUMN_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				COLUMN_PARENT_ID + " INTEGER, " +
-				COLUMN_TITLE     + " TEXT, " +
-				COLUMN_BODY      + " TEXT, " +
-				COLUMN_TYPE      + " INTEGER, " +
-				COLUMN_ARCHIVED  + " INTEGER, " +
-				COLUMN_THEME     + " INTEGER, " +
-				COLUMN_COUNTER   + " INTEGER, " +
-				COLUMN_DATE      + " TEXT, " +
-				COLUMN_EXTRA     + " TEXT" +
+				COLUMN_PARENT_ID + " INTEGER DEFAULT -1, " +
+				COLUMN_TITLE     + " TEXT DEFAULT '', " +
+				COLUMN_BODY      + " TEXT DEFAULT '', " +
+				COLUMN_TYPE      + " INTEGER DEFAULT 0, " +
+				COLUMN_ARCHIVED  + " INTEGER DEFAULT 0, " +
+				COLUMN_THEME     + " INTEGER DEFAULT 0, " +
+				COLUMN_COUNTER   + " INTEGER DEFAULT 0, " +
+				COLUMN_DATE      + " TEXT DEFAULT '', " +
+				COLUMN_EXTRA     + " TEXT DEFAULT ''" +
 			")"
 		);
 
@@ -55,7 +55,6 @@ public class OpenHelper extends SQLiteOpenHelper {
 		// A trigger to empty UNDO table, add restoring sql query to UNDO table, then delete all child notes before deleting the parent note
 		db.execSQL(
 			"CREATE TRIGGER IF NOT EXISTS _t1_dn BEFORE DELETE ON " + TABLE_NOTES + " BEGIN " +
-				"DELETE FROM " + TABLE_UNDO + ";" +
 				"INSERT INTO " + TABLE_UNDO + " VALUES('INSERT INTO " + TABLE_NOTES +
 				"(" + COLUMN_ID + "," + COLUMN_PARENT_ID + "," + COLUMN_TITLE + "," + COLUMN_BODY + "," + COLUMN_TYPE + "," + COLUMN_ARCHIVED + "," + COLUMN_THEME + "," + COLUMN_COUNTER + "," + COLUMN_DATE + "," + COLUMN_EXTRA + ")" +
 				"VALUES('||old." + COLUMN_ID + "||','||old." + COLUMN_PARENT_ID + "||','||quote(old." + COLUMN_TITLE + ")||','||quote(old." + COLUMN_BODY + ")||','||old." + COLUMN_TYPE + "||','||old." + COLUMN_ARCHIVED + "||','||old." + COLUMN_THEME + "||','||old." + COLUMN_COUNTER + "||','||quote(old." + COLUMN_DATE + ")||','||quote(old." + COLUMN_EXTRA + ")||')');" +

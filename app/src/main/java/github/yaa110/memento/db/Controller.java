@@ -124,30 +124,90 @@ public class Controller {
 	}
 
 	/**
-	 * Deletes a note or category from the database and decrements the counter
-	 * of category if the deleted object is an instance of Note class
-	 * @param note the object of type T
-	 * @param <T> a type which extends DatabaseModel
-	 * @return true if the object is deleted
+	 * Restores last deleted notes
 	 */
-	public <T extends DatabaseModel> boolean deleteNote(T note) {
+	public void undoDeletion() {
 		SQLiteDatabase db = helper.getWritableDatabase();
 
 		try {
-			boolean isDone = db.delete(
-				OpenHelper.TABLE_NOTES,
-				OpenHelper.COLUMN_ID + " = ?",
-				new String[] {
-					String.format(Locale.US, "%d", note.id)
-				}
-			) > 0;
+			Cursor c = db.query(
+				OpenHelper.TABLE_UNDO,
+				null, null, null, null, null, null
+			);
 
-			if (isDone && note instanceof Note) {
+			if (c != null) {
+				while (c.moveToNext()) {
+					String query = c.getString(c.getColumnIndex(OpenHelper.COLUMN_SQL));
+					if (query != null) {
+						Cursor nc = db.rawQuery(
+							query,
+							null
+						);
+
+						if (nc != null) {
+							nc.moveToFirst();
+							nc.close();
+						}
+					}
+				}
+
+				c.close();
+			}
+
+			clearUndoTable(db);
+		} finally {
+			db.close();
+		}
+	}
+
+	/**
+	 * Clears the undo table
+	 * @param db an object of writable SQLiteDatabase
+	 */
+	public void clearUndoTable(SQLiteDatabase db) {
+		Cursor uc = db.rawQuery("DELETE FROM " + OpenHelper.TABLE_UNDO, null);
+		if (uc != null) {
+			uc.moveToFirst();
+			uc.close();
+		}
+	}
+
+	/**
+	 * Deletes a note or category from the database and decrements the counter
+	 * of category if the deleted object is an instance of Note class
+	 * @param ids a list of the notes' IDs
+	 * @param categoryId the id of parent category
+	 */
+	public void deleteNotes(String[] ids, long categoryId) {
+		SQLiteDatabase db = helper.getWritableDatabase();
+
+		try {
+			clearUndoTable(db);
+
+			StringBuilder where = new StringBuilder();
+			boolean needOR = false;
+			for (int i = 0; i < ids.length; i++) {
+				if (needOR) {
+					where.append(" OR ");
+				} else {
+					needOR = true;
+				}
+				where.append(OpenHelper.COLUMN_ID).append(" = ?");
+			}
+
+			int count = db.delete(
+				OpenHelper.TABLE_NOTES,
+				where.toString(),
+				ids
+			);
+
+			if (count > 0 && categoryId != DatabaseModel.NEW_MODEL_ID) {
 				// Decrement the counter of category
 				Cursor c = db.rawQuery(
-					"UPDATE " + OpenHelper.TABLE_NOTES + " SET " + OpenHelper.COLUMN_COUNTER + " = " + OpenHelper.COLUMN_COUNTER + " - 1 WHERE " + OpenHelper.COLUMN_ID + " = ?",
+					"UPDATE " + OpenHelper.TABLE_NOTES + " SET " + OpenHelper.COLUMN_COUNTER + " = " + OpenHelper.COLUMN_COUNTER + " - ? WHERE " + OpenHelper.COLUMN_ID + " = ?",
 					new String[]{
-						String.format(Locale.US, "%d", ((Note) note).categoryId)
+						String.format(Locale.US, "%d", count),
+						String.format(Locale.US, "%d", categoryId)
 					}
 				);
 
@@ -156,8 +216,6 @@ public class Controller {
 					c.close();
 				}
 			}
-
-			return isDone;
 		} finally {
 			db.close();
 		}
@@ -169,7 +227,7 @@ public class Controller {
 	 * @param note the object of type T
 	 * @param values ContentValuse of the object to be inserted or updated
 	 * @param <T> a type which extends DatabaseModel
-	 * @return true if the object is saved
+	 * @return the id of saved note
 	 */
 	public <T extends DatabaseModel> long saveNote(T note, ContentValues values) {
 		SQLiteDatabase db = helper.getWritableDatabase();

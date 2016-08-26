@@ -62,10 +62,12 @@ abstract public class ModelAdapter<T extends DatabaseModel, VH extends ModelView
 			selected.add(item);
 			holder.setSelected(true);
 		}
+		listener.onCountSelection(selected.size());
 	}
 
 	public interface ClickListener<M extends DatabaseModel> {
 		void onClick(M item, int position);
 		void onChangeSelection(boolean haveSelected);
+		void onCountSelection(int count);
 	}
 }

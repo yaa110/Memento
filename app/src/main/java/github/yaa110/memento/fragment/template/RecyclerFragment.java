@@ -4,19 +4,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Locale;
 
 import github.yaa110.memento.R;
 import github.yaa110.memento.adapter.template.ModelAdapter;
+import github.yaa110.memento.db.Controller;
 import github.yaa110.memento.db.OpenHelper;
+import github.yaa110.memento.inner.Animator;
 import github.yaa110.memento.model.Category;
 import github.yaa110.memento.model.DatabaseModel;
 import github.yaa110.memento.model.Note;
@@ -25,10 +33,13 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 	public View fab;
 	private RecyclerView recyclerView;
 	private View empty;
+	private Toolbar selectionToolbar;
+	private TextView selectionCounter;
+	public boolean selectionState = false;
 
 	private A adapter;
 	public ArrayList<T> items;
-	public ArrayList<T> selected;
+	public ArrayList<T> selected = new ArrayList<>();
 	public Callbacks activity;
 
 	public long categoryId = DatabaseModel.NEW_MODEL_ID;
@@ -47,6 +58,96 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 		fab = view.findViewById(R.id.fab);
 		recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 		empty = view.findViewById(R.id.empty);
+		selectionToolbar = (Toolbar) getActivity().findViewById(R.id.selection_toolbar);
+		selectionCounter = (TextView) selectionToolbar.findViewById(R.id.selection_counter);
+
+		selectionToolbar.findViewById(R.id.selection_back).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				toggleSelection(false);
+			}
+		});
+
+		selectionToolbar.findViewById(R.id.selection_delete).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				final ArrayList<T> undos = new ArrayList<>();
+				undos.addAll(selected);
+				toggleSelection(false);
+
+				new Thread() {
+					@Override
+					public void run() {
+						final int length = undos.size();
+						String[] ids = new String[length];
+						final int[] sortablePosition = new int[length];
+
+						for (int i = 0; i < length; i++) {
+							T item = undos.get(i);
+							ids[i] = String.format(Locale.US, "%d", item.id);
+							int position = items.indexOf(item);
+							item.position = position;
+							sortablePosition[i] = position;
+						}
+
+						Controller.instance.deleteNotes(ids, categoryId);
+
+						Arrays.sort(sortablePosition);
+
+						getActivity().runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								for (int i = length - 1; i >= 0; i--) {
+									items.remove(sortablePosition[i]);
+									adapter.notifyItemRemoved(sortablePosition[i]);
+								}
+
+								StringBuilder message = new StringBuilder();
+								message.append(length).append(" message");
+								if (length > 1) message.append("s were deleted");
+								else message.append(" was deleted.");
+
+								Snackbar.make(fab != null ? fab : selectionToolbar, message.toString(), 7000)
+									.setAction(R.string.undo, new View.OnClickListener() {
+										@Override
+										public void onClick(View view) {
+											new Thread() {
+												@Override
+												public void run() {
+													Controller.instance.undoDeletion();
+
+													Collections.sort(undos, new Comparator<T>() {
+														@Override
+														public int compare(T t1, T t2) {
+															if (t1.position < t2.position) return -1;
+															if (t1.position == t2.position) return 0;
+															return 1;
+														}
+													});
+
+													getActivity().runOnUiThread(new Runnable() {
+														@Override
+														public void run() {
+															for (int i = 0; i < length; i++) {
+																T item = undos.get(i);
+																addItem(item, item.position);
+															}
+														}
+													});
+													interrupt();
+												}
+											}.start();
+										}
+									})
+									.show();
+							}
+						});
+
+						interrupt();
+					}
+				}.start();
+			}
+		});
 
 		if (fab != null) {
 			fab.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +172,34 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 		loadItems();
 	}
 
+	public void onChangeCounter(int count) {
+		selectionCounter.setText(String.format(Locale.US, "%d", count));
+	}
+
+	public void toggleSelection(boolean state) {
+		selectionState = state;
+		activity.onChangeSelection(state);
+		if (state) {
+			Animator.create(getContext())
+				.on(selectionToolbar)
+				.setStartVisibility(View.VISIBLE)
+				.animate(R.anim.fade_in);
+		} else {
+			Animator.create(getContext())
+				.on(selectionToolbar)
+				.setEndVisibility(View.GONE)
+				.animate(R.anim.fade_out);
+
+			deselectAll();
+		}
+	}
+
+	private void deselectAll() {
+		while (!selected.isEmpty()) {
+			adapter.notifyItemChanged(items.indexOf(selected.remove(0)));
+		}
+	}
+
 	private void loadItems() {
 		new Thread() {
 			@SuppressWarnings("unchecked")
@@ -84,8 +213,6 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 						// Get notes of the category by categoryId
 						items = (ArrayList<T>) Note.all(categoryId);
 					}
-
-					selected = new ArrayList<>();
 
 					adapter = getAdapterClass().getDeclaredConstructor(
 						ArrayList.class,
@@ -150,6 +277,7 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 	public abstract ModelAdapter.ClickListener getListener();
 
 	public interface Callbacks {
-		// TODO
+		void onChangeSelection(boolean state);
+		void toggleOneSelection(boolean state);
 	}
 }
