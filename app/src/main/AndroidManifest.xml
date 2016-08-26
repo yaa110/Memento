@@ -22,6 +22,9 @@
 
         <activity android:name=".activity.CategoryActivity"
                   android:configChanges="orientation|keyboardHidden|screenSize" />
+
+        <activity android:name=".activity.NoteActivity"
+                  android:configChanges="orientation|keyboardHidden|screenSize" />
     </application>
 
 </manifest>

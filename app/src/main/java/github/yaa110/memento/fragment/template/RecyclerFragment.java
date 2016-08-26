@@ -44,6 +44,7 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 
 	public long categoryId = DatabaseModel.NEW_MODEL_ID;
 	public String categoryTitle;
+	public int categoryTheme;
 	public int categoryPosition = 0;
 
 	@Nullable
@@ -166,6 +167,7 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 			// Get the parent data
 			categoryId = data.getLongExtra(OpenHelper.COLUMN_ID, DatabaseModel.NEW_MODEL_ID);
 			categoryTitle = data.getStringExtra(OpenHelper.COLUMN_TITLE);
+			categoryTheme = data.getIntExtra(OpenHelper.COLUMN_THEME, Category.THEME_GREEN);
 			categoryPosition = data.getIntExtra("position", 0);
 
 			if (categoryTitle != null) {
@@ -257,6 +259,11 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 
 	public void refreshItem(int position) {
 		adapter.notifyItemChanged(position);
+	}
+
+	public void deleteItem(int position) {
+		items.remove(position);
+		adapter.notifyItemRemoved(position);
 	}
 
 	public void addItem(T item, int position) {

@@ -1,10 +1,13 @@
 package github.yaa110.memento.fragment;
 
+import android.content.Intent;
 import android.view.View;
 
 import github.yaa110.memento.R;
+import github.yaa110.memento.activity.NoteActivity;
 import github.yaa110.memento.adapter.NoteAdapter;
 import github.yaa110.memento.adapter.template.ModelAdapter;
+import github.yaa110.memento.db.OpenHelper;
 import github.yaa110.memento.fragment.template.RecyclerFragment;
 import github.yaa110.memento.inner.Animator;
 import github.yaa110.memento.model.DatabaseModel;
@@ -19,7 +22,7 @@ public class CategoryFragment extends RecyclerFragment<Note, NoteAdapter> {
 	private ModelAdapter.ClickListener listener = new ModelAdapter.ClickListener() {
 		@Override
 		public void onClick(DatabaseModel item, int position) {
-			// TODO
+			startNoteActivity(item.type, item.id, position);
 		}
 
 		@Override
@@ -51,16 +54,71 @@ public class CategoryFragment extends RecyclerFragment<Note, NoteAdapter> {
 		fab_type.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				// TODO
+				startNoteActivity(DatabaseModel.TYPE_NOTE_SIMPLE, DatabaseModel.NEW_MODEL_ID, 0);
 			}
 		});
 
 		fab_drawing.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				// TODO
+				startNoteActivity(DatabaseModel.TYPE_NOTE_DRAWING, DatabaseModel.NEW_MODEL_ID, 0);
 			}
 		});
+	}
+
+	private void startNoteActivity(final int type, final long noteId, final int position) {
+		toggleFab(true);
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					sleep(150);
+				} catch (InterruptedException ignored) {
+				}
+
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Intent intent = new Intent(getContext(), NoteActivity.class);
+						intent.putExtra(OpenHelper.COLUMN_TYPE, type);
+						intent.putExtra("position", position);
+						intent.putExtra(OpenHelper.COLUMN_ID, noteId);
+						intent.putExtra(OpenHelper.COLUMN_PARENT_ID, categoryId);
+						intent.putExtra(OpenHelper.COLUMN_THEME, categoryTheme);
+						startActivityForResult(intent, NoteActivity.REQUEST_CODE);
+					}
+				});
+
+				interrupt();
+			}
+		}.start();
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == NoteActivity.REQUEST_CODE) {
+			int position = data.getIntExtra("position", 0);
+
+			switch (resultCode) {
+				case NoteActivity.RESULT_NEW:
+					Note note = new Note();
+					note.title = data.getStringExtra(OpenHelper.COLUMN_TITLE);
+					note.type = data.getIntExtra(OpenHelper.COLUMN_TYPE, DatabaseModel.TYPE_NOTE_SIMPLE);
+					note.createdAt = data.getLongExtra(OpenHelper.COLUMN_DATE, System.currentTimeMillis());
+					note.id = data.getLongExtra(OpenHelper.COLUMN_ID, DatabaseModel.NEW_MODEL_ID);
+					addItem(note, position);
+					break;
+				case NoteActivity.RESULT_EDIT:
+					Note item = items.get(position);
+					item.title = data.getStringExtra(OpenHelper.COLUMN_TITLE);
+					refreshItem(position);
+					break;
+				case NoteActivity.RESULT_DELETE:
+					deleteItem(position);
+					break;
+			}
+		}
 	}
 
 	@Override

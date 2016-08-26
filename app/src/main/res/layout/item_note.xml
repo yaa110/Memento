@@ -9,17 +9,14 @@
     android:background="@drawable/ripple_rect"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/badge_txt"
+    <ImageView
+        android:id="@+id/badge_icon"
         android:layout_width="@dimen/badge_size"
         android:layout_height="@dimen/badge_size"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="@dimen/medium_text"
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:maxLength="1" />
+        android:scaleType="center" />
 
     <ImageView
         android:id="@+id/selected"

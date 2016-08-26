@@ -70,7 +70,6 @@ public class Note extends DatabaseModel {
 				OpenHelper.COLUMN_TYPE,
 				OpenHelper.COLUMN_ARCHIVED,
 				OpenHelper.COLUMN_PARENT_ID,
-				OpenHelper.COLUMN_BODY
 			},
 			OpenHelper.COLUMN_TYPE + " != ? AND " + OpenHelper.COLUMN_PARENT_ID + " = ? AND " + OpenHelper.COLUMN_ARCHIVED + " = ?",
 			new String[]{
