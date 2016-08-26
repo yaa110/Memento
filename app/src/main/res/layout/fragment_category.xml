@@ -28,7 +28,7 @@
         <ImageView
             android:layout_width="110dp"
             android:layout_height="110dp"
-            app:srcCompat="@drawable/ic_empty_categories"
+            app:srcCompat="?attr/emptyIcon"
             android:scaleType="center"
             tools:ignore="MissingPrefix"
             android:contentDescription="@string/empty"/>

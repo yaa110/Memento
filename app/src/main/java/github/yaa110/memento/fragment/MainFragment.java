@@ -31,7 +31,6 @@ public class MainFragment extends RecyclerFragment<Category, CategoryAdapter> {
 			intent.putExtra(OpenHelper.COLUMN_ID, item.id);
 			intent.putExtra(OpenHelper.COLUMN_TITLE, item.title);
 			intent.putExtra(OpenHelper.COLUMN_THEME, ((Category) item).theme);
-			intent.putExtra(OpenHelper.COLUMN_COUNTER, ((Category) item).counter);
 			startActivityForResult(intent, CategoryActivity.REQUEST_CODE);
 		}
 

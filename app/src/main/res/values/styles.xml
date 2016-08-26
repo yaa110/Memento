@@ -2,6 +2,7 @@
 
     <declare-styleable name="Fab">
         <attr name="fabColor" format="reference" />
+        <attr name="emptyIcon" format="reference" />
     </declare-styleable>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -9,6 +10,7 @@
         <item name="colorPrimaryDark">@color/main_color_dark</item>
         <item name="colorAccent">@color/main_color</item>
         <item name="fabColor">@drawable/fab</item>
+        <item name="emptyIcon">@drawable/ic_empty_categories</item>
     </style>
 
     <style name="AppThemeRed" parent="Theme.AppCompat.Light.NoActionBar">
@@ -16,6 +18,7 @@
         <item name="colorPrimaryDark">@color/red_dark</item>
         <item name="colorAccent">@color/red</item>
         <item name="fabColor">@drawable/fab_red</item>
+        <item name="emptyIcon">@drawable/empty_red</item>
     </style>
 
     <style name="AppThemePink" parent="Theme.AppCompat.Light.NoActionBar">
@@ -23,6 +26,7 @@
         <item name="colorPrimaryDark">@color/pink_dark</item>
         <item name="colorAccent">@color/pink</item>
         <item name="fabColor">@drawable/fab_pink</item>
+        <item name="emptyIcon">@drawable/empty_pink</item>
     </style>
 
     <style name="AppThemePurple" parent="Theme.AppCompat.Light.NoActionBar">
@@ -30,6 +34,7 @@
         <item name="colorPrimaryDark">@color/purple_dark</item>
         <item name="colorAccent">@color/purple</item>
         <item name="fabColor">@drawable/fab_purple</item>
+        <item name="emptyIcon">@drawable/empty_purple</item>
     </style>
 
     <style name="AppThemeBlue" parent="Theme.AppCompat.Light.NoActionBar">
@@ -37,6 +42,7 @@
         <item name="colorPrimaryDark">@color/blue_dark</item>
         <item name="colorAccent">@color/blue</item>
         <item name="fabColor">@drawable/fab_blue</item>
+        <item name="emptyIcon">@drawable/empty_blue</item>
     </style>
 
     <style name="AppThemeCyan" parent="Theme.AppCompat.Light.NoActionBar">
@@ -44,6 +50,7 @@
         <item name="colorPrimaryDark">@color/cyan_dark</item>
         <item name="colorAccent">@color/cyan</item>
         <item name="fabColor">@drawable/fab_cyan</item>
+        <item name="emptyIcon">@drawable/empty_cyan</item>
     </style>
     
     <style name="AppThemeTeal" parent="Theme.AppCompat.Light.NoActionBar">
@@ -51,6 +58,7 @@
         <item name="colorPrimaryDark">@color/teal_dark</item>
         <item name="colorAccent">@color/teal</item>
         <item name="fabColor">@drawable/fab_teal</item>
+        <item name="emptyIcon">@drawable/empty_teal</item>
     </style>
     
     <style name="AppThemeGreen" parent="Theme.AppCompat.Light.NoActionBar">
@@ -58,6 +66,7 @@
         <item name="colorPrimaryDark">@color/green_dark</item>
         <item name="colorAccent">@color/green</item>
         <item name="fabColor">@drawable/fab_green</item>
+        <item name="emptyIcon">@drawable/empty_green</item>
     </style>
     
     <style name="AppThemeAmber" parent="Theme.AppCompat.Light.NoActionBar">
@@ -65,6 +74,7 @@
         <item name="colorPrimaryDark">@color/amber_dark</item>
         <item name="colorAccent">@color/amber</item>
         <item name="fabColor">@drawable/fab_amber</item>
+        <item name="emptyIcon">@drawable/empty_amber</item>
     </style>
 
     <style name="AppThemeOrange" parent="Theme.AppCompat.Light.NoActionBar">
@@ -72,6 +82,7 @@
         <item name="colorPrimaryDark">@color/orange_dark</item>
         <item name="colorAccent">@color/orange</item>
         <item name="fabColor">@drawable/fab_orange</item>
+        <item name="emptyIcon">@drawable/empty_orange</item>
     </style>
 
 </resources>

@@ -11,8 +11,6 @@ import github.yaa110.memento.model.Category;
 import github.yaa110.memento.widget.CategoryViewHolder;
 
 public class CategoryAdapter extends ModelAdapter<Category, CategoryViewHolder> {
-
-
 	public CategoryAdapter(ArrayList<Category> items, ArrayList<Category> selected, ClickListener<Category> listener) {
 		super(items, selected, listener);
 	}

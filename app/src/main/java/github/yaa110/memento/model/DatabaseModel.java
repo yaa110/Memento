@@ -3,6 +3,7 @@ package github.yaa110.memento.model;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import github.yaa110.memento.R;
 import github.yaa110.memento.db.Controller;
 import github.yaa110.memento.db.OpenHelper;
 
@@ -18,6 +19,7 @@ abstract public class DatabaseModel {
 	public String title;
 	public long createdAt;
 	public boolean isArchived;
+	public int theme;
 
 	public int position = 0;
 
@@ -61,6 +63,34 @@ abstract public class DatabaseModel {
 		}
 
 		return false;
+	}
+
+	/**
+	 * @return color of the theme
+	 */
+	public int getThemeBackground() {
+		switch (theme) {
+			case Category.THEME_RED:
+				return R.drawable.circle_red;
+			case Category.THEME_PINK:
+				return R.drawable.circle_pink;
+			case Category.THEME_AMBER:
+				return R.drawable.circle_amber;
+			case Category.THEME_BLUE:
+				return R.drawable.circle_blue;
+			case Category.THEME_CYAN:
+				return R.drawable.circle_cyan;
+			case Category.THEME_GREEN:
+				return R.drawable.circle_green;
+			case Category.THEME_ORANGE:
+				return R.drawable.circle_orange;
+			case Category.THEME_PURPLE:
+				return R.drawable.circle_purple;
+			case Category.THEME_TEAL:
+				return R.drawable.circle_teal;
+		}
+
+		return R.drawable.circle_main;
 	}
 
 	/**
