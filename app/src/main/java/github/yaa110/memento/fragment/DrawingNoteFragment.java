@@ -16,7 +16,7 @@ public class DrawingNoteFragment extends NoteFragment {
 
 	@Override
 	public void saveNote() {
-		// TODO
+		// TODO populate and save note object of NoteFragment
 	}
 
 	@Override
