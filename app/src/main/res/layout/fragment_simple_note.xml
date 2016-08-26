@@ -29,4 +29,11 @@
 
     </android.support.design.widget.TextInputLayout>
 
+    <in.nashapp.androidsummernote.Summernote
+        android:id="@+id/wysiwyg_txt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/text_input_layout"/>
+
 </RelativeLayout>
