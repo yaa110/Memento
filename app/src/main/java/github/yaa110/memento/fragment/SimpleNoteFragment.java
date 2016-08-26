@@ -15,7 +15,12 @@ public class SimpleNoteFragment extends NoteFragment {
 	}
 
 	@Override
-	public void init(View view) {
+	public void saveNote() {
+		// TODO populate and save note object of NoteFragment
+	}
 
+	@Override
+	public void init(View view) {
+		// TODO
 	}
 }

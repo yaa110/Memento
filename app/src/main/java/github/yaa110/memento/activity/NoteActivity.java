@@ -66,7 +66,7 @@ public class NoteActivity extends AppCompatActivity implements NoteFragment.Call
 
 	@Override
 	public void onBackPressed() {
-		fragment.populateNote();
+		fragment.saveNote();
 
 		Intent data = new Intent();
 		data.putExtra("position", position);
@@ -85,7 +85,8 @@ public class NoteActivity extends AppCompatActivity implements NoteFragment.Call
 	}
 
 	@Override
-	public void setNoteResult(int result) {
+	public void setNoteResult(int result, boolean closeActivity) {
 		noteResult = result;
+		if (closeActivity) onBackPressed();
 	}
 }

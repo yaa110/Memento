@@ -33,7 +33,7 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 	public View fab;
 	private RecyclerView recyclerView;
 	private View empty;
-	private Toolbar selectionToolbar;
+	public Toolbar selectionToolbar;
 	private TextView selectionCounter;
 	public boolean selectionState = false;
 
@@ -107,7 +107,7 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 								}
 
 								StringBuilder message = new StringBuilder();
-								message.append(length).append(" message");
+								message.append(length).append(" ").append(getItemName());
 								if (length > 1) message.append("s were deleted");
 								else message.append(" was deleted.");
 
@@ -261,9 +261,10 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 		adapter.notifyItemChanged(position);
 	}
 
-	public void deleteItem(int position) {
-		items.remove(position);
+	public T deleteItem(int position) {
+		T item = items.remove(position);
 		adapter.notifyItemRemoved(position);
+		return item;
 	}
 
 	public void addItem(T item, int position) {
@@ -286,6 +287,7 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 
 	public abstract void onClickFab();
 	public abstract int getLayout();
+	public abstract String getItemName();
 	public abstract Class<A> getAdapterClass();
 	public abstract ModelAdapter.ClickListener getListener();
 

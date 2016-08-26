@@ -26,6 +26,19 @@
             android:scaleType="center"
             tools:ignore="MissingPrefix"
             android:contentDescription="@string/back"/>
+
+        <ImageView
+            android:id="@+id/delete_btn"
+            android:layout_width="@dimen/toolbar_height"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_gravity="end|top"
+            app:srcCompat="@drawable/ic_delete"
+            android:clickable="true"
+            android:visibility="gone"
+            android:background="@drawable/ripple_circle"
+            android:scaleType="center"
+            tools:ignore="MissingPrefix"
+            android:contentDescription="@string/menu"/>
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout

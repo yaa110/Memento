@@ -15,7 +15,12 @@ public class DrawingNoteFragment extends NoteFragment {
 	}
 
 	@Override
-	public void init(View view) {
+	public void saveNote() {
+		// TODO
+	}
 
+	@Override
+	public void init(View view) {
+		// TODO
 	}
 }

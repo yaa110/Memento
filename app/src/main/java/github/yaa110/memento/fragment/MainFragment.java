@@ -271,6 +271,11 @@ public class MainFragment extends RecyclerFragment<Category, CategoryAdapter> {
 	}
 
 	@Override
+	public String getItemName() {
+		return "category";
+	}
+
+	@Override
 	public Class<CategoryAdapter> getAdapterClass() {
 		return CategoryAdapter.class;
 	}

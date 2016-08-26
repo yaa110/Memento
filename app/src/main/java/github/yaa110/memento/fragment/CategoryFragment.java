@@ -1,12 +1,16 @@
 package github.yaa110.memento.fragment;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.view.View;
+
+import java.util.Locale;
 
 import github.yaa110.memento.R;
 import github.yaa110.memento.activity.NoteActivity;
 import github.yaa110.memento.adapter.NoteAdapter;
 import github.yaa110.memento.adapter.template.ModelAdapter;
+import github.yaa110.memento.db.Controller;
 import github.yaa110.memento.db.OpenHelper;
 import github.yaa110.memento.fragment.template.RecyclerFragment;
 import github.yaa110.memento.inner.Animator;
@@ -96,9 +100,9 @@ public class CategoryFragment extends RecyclerFragment<Note, NoteAdapter> {
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(int requestCode, int resultCode, final Intent data) {
 		if (requestCode == NoteActivity.REQUEST_CODE) {
-			int position = data.getIntExtra("position", 0);
+			final int position = data.getIntExtra("position", 0);
 
 			switch (resultCode) {
 				case NoteActivity.RESULT_NEW:
@@ -115,7 +119,48 @@ public class CategoryFragment extends RecyclerFragment<Note, NoteAdapter> {
 					refreshItem(position);
 					break;
 				case NoteActivity.RESULT_DELETE:
-					deleteItem(position);
+					new Thread() {
+						@Override
+						public void run() {
+							Controller.instance.deleteNotes(
+								new String[] {
+									String.format(Locale.US, "%d", data.getLongExtra(OpenHelper.COLUMN_ID, DatabaseModel.NEW_MODEL_ID))
+								},
+								categoryId
+							);
+
+							getActivity().runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									final Note deletedItem = deleteItem(position);
+									Snackbar.make(fab != null ? fab : selectionToolbar, "1 note was deleted", 7000)
+										.setAction(R.string.undo, new View.OnClickListener() {
+											@Override
+											public void onClick(View view) {
+												new Thread() {
+													@Override
+													public void run() {
+														Controller.instance.undoDeletion();
+
+														getActivity().runOnUiThread(new Runnable() {
+															@Override
+															public void run() {
+																addItem(deletedItem, position);
+															}
+														});
+
+														interrupt();
+													}
+												}.start();
+											}
+										})
+										.show();
+								}
+							});
+
+							interrupt();
+						}
+					}.start();
 					break;
 			}
 		}
@@ -177,6 +222,11 @@ public class CategoryFragment extends RecyclerFragment<Note, NoteAdapter> {
 	@Override
 	public int getLayout() {
 		return R.layout.fragment_category;
+	}
+
+	@Override
+	public String getItemName() {
+		return "note";
 	}
 
 	@Override
