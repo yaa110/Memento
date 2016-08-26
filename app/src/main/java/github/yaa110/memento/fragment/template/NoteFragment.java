@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import github.yaa110.memento.R;
 import github.yaa110.memento.activity.NoteActivity;
@@ -19,6 +20,7 @@ abstract public class NoteFragment extends Fragment {
 	public Note note = null;
 	public Callbacks activity;
 	private View deleteBtn;
+	public EditText title;
 
 	@Nullable
 	@Override
@@ -31,6 +33,7 @@ abstract public class NoteFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		deleteBtn = getActivity().findViewById(R.id.delete_btn);
+		title = (EditText) view.findViewById(R.id.title_txt);
 
 		Intent data = getActivity().getIntent();
 		long noteId = data.getLongExtra(OpenHelper.COLUMN_ID, DatabaseModel.NEW_MODEL_ID);
@@ -45,6 +48,9 @@ abstract public class NoteFragment extends Fragment {
 			activity.setNoteResult(NoteActivity.RESULT_NEW, false);
 			deleteBtn.setVisibility(View.GONE);
 			note.categoryId = categoryId;
+			note.title = "";
+			note.body = "";
+			note.isArchived = false;
 			note.type = data.getIntExtra(OpenHelper.COLUMN_TYPE, DatabaseModel.TYPE_NOTE_SIMPLE);
 		} else {
 			activity.setNoteResult(NoteActivity.RESULT_EDIT, false);
@@ -57,6 +63,8 @@ abstract public class NoteFragment extends Fragment {
 			});
 		}
 
+		title.setText(note.title);
+
 		init(view);
 	}
 
@@ -66,9 +74,21 @@ abstract public class NoteFragment extends Fragment {
 		activity = (Callbacks) context;
 	}
 
+	public void saveNote(SaveListener listener) {
+		String inputTitle = title.getText().toString();
+		if (inputTitle.isEmpty()) inputTitle = "Untitled";
+		note.title = inputTitle;
+		if (note.id == DatabaseModel.NEW_MODEL_ID) {
+			note.createdAt = System.currentTimeMillis();
+		}
+	}
+
 	abstract public int getLayout();
-	abstract public void saveNote();
 	abstract public void init(View view);
+
+	public interface SaveListener {
+		void onSave();
+	}
 
 	public interface Callbacks {
 		void setNoteResult(int result, boolean closeActivity);

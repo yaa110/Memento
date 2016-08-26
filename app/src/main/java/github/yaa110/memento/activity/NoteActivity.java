@@ -66,27 +66,41 @@ public class NoteActivity extends AppCompatActivity implements NoteFragment.Call
 
 	@Override
 	public void onBackPressed() {
-		fragment.saveNote();
+		fragment.saveNote(new NoteFragment.SaveListener() {
+			@Override
+			public void onSave() {
+				final Intent data = new Intent();
+				data.putExtra("position", position);
+				data.putExtra(OpenHelper.COLUMN_ID, fragment.note.id);
 
-		Intent data = new Intent();
-		data.putExtra("position", position);
-		data.putExtra(OpenHelper.COLUMN_ID, fragment.note.id);
+				switch (noteResult) {
+					case RESULT_NEW:
+						data.putExtra(OpenHelper.COLUMN_TYPE, fragment.note.type);
+						data.putExtra(OpenHelper.COLUMN_DATE, fragment.note.createdAt);
+					case RESULT_EDIT:
+						data.putExtra(OpenHelper.COLUMN_TITLE, fragment.note.title);
+				}
 
-		switch (noteResult) {
-			case RESULT_NEW:
-				data.putExtra(OpenHelper.COLUMN_TYPE, fragment.note.type);
-				data.putExtra(OpenHelper.COLUMN_DATE, fragment.note.createdAt);
-			case RESULT_EDIT:
-				data.putExtra(OpenHelper.COLUMN_TITLE, fragment.note.title);
-		}
-
-		setResult(noteResult, data);
-		finish();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						setResult(noteResult, data);
+						finish();
+					}
+				});
+			}
+		});
 	}
 
 	@Override
 	public void setNoteResult(int result, boolean closeActivity) {
 		noteResult = result;
-		if (closeActivity) onBackPressed();
+		if (closeActivity) {
+			Intent data = new Intent();
+			data.putExtra("position", position);
+			data.putExtra(OpenHelper.COLUMN_ID, fragment.note.id);
+			setResult(result, data);
+			finish();
+		}
 	}
 }

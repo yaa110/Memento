@@ -2,6 +2,7 @@ package github.yaa110.memento.model;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -23,7 +24,9 @@ public class Note extends DatabaseModel {
 	public Note(Cursor c) {
 		super(c);
 		this.categoryId = c.getLong(c.getColumnIndex(OpenHelper.COLUMN_PARENT_ID));
-		this.body = c.getString(c.getColumnIndex(OpenHelper.COLUMN_BODY));
+		try {
+			this.body = c.getString(c.getColumnIndex(OpenHelper.COLUMN_BODY));
+		} catch (Exception ignored) {}
 	}
 
 	/**
