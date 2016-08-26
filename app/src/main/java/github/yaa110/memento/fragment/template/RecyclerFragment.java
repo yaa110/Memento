@@ -44,6 +44,8 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 
 	public long categoryId = DatabaseModel.NEW_MODEL_ID;
 	public String categoryTitle;
+	public int categoryCounter = 0;
+	public int categoryPosition = 0;
 
 	@Nullable
 	@Override
@@ -163,6 +165,8 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 			// Get the parent data
 			categoryId = data.getLongExtra(OpenHelper.COLUMN_ID, DatabaseModel.NEW_MODEL_ID);
 			categoryTitle = data.getStringExtra(OpenHelper.COLUMN_TITLE);
+			categoryCounter = data.getIntExtra(OpenHelper.COLUMN_COUNTER, 0);
+			categoryPosition = data.getIntExtra("position", 0);
 
 			if (categoryTitle != null) {
 				((TextView) getActivity().findViewById(R.id.title)).setText(categoryTitle);

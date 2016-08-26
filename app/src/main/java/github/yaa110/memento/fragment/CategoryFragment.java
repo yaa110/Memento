@@ -1,5 +1,6 @@
 package github.yaa110.memento.fragment;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
@@ -11,8 +12,10 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import github.yaa110.memento.R;
+import github.yaa110.memento.activity.CategoryActivity;
 import github.yaa110.memento.adapter.CategoryAdapter;
 import github.yaa110.memento.adapter.template.ModelAdapter;
+import github.yaa110.memento.db.OpenHelper;
 import github.yaa110.memento.fragment.template.RecyclerFragment;
 import github.yaa110.memento.model.Category;
 import github.yaa110.memento.model.DatabaseModel;
@@ -23,7 +26,13 @@ public class CategoryFragment extends RecyclerFragment<Category, CategoryAdapter
 	private ModelAdapter.ClickListener listener = new ModelAdapter.ClickListener() {
 		@Override
 		public void onClick(DatabaseModel item, int position) {
-			// TODO open category
+			Intent intent = new Intent(getContext(), CategoryActivity.class);
+			intent.putExtra("position", position);
+			intent.putExtra(OpenHelper.COLUMN_ID, item.id);
+			intent.putExtra(OpenHelper.COLUMN_TITLE, item.title);
+			intent.putExtra(OpenHelper.COLUMN_THEME, ((Category) item).theme);
+			intent.putExtra(OpenHelper.COLUMN_COUNTER, ((Category) item).counter);
+			startActivityForResult(intent, CategoryActivity.REQUEST_CODE);
 		}
 
 		@Override
@@ -245,6 +254,13 @@ public class CategoryFragment extends RecyclerFragment<Category, CategoryAdapter
 				return (ImageView) view.findViewById(R.id.theme_teal);
 			default:
 				return (ImageView) view.findViewById(R.id.theme_green);
+		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == CategoryActivity.REQUEST_CODE && resultCode == CategoryActivity.RESULT_CHANGE) {
+			// TODO
 		}
 	}
 
