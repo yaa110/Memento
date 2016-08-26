@@ -42,14 +42,14 @@ public class OpenHelper extends SQLiteOpenHelper {
 				COLUMN_COUNTER   + " INTEGER DEFAULT 0, " +
 				COLUMN_DATE      + " TEXT DEFAULT '', " +
 				COLUMN_EXTRA     + " TEXT DEFAULT ''" +
-			")"
+				")"
 		);
 
 		// Undo table to make delete queries restorable
 		db.execSQL(
 			"CREATE TABLE IF NOT EXISTS " + TABLE_UNDO + " (" +
 				COLUMN_SQL + " TEXT" +
-			")"
+				")"
 		);
 
 		// A trigger to empty UNDO table, add restoring sql query to UNDO table, then delete all child notes before deleting the parent note
@@ -57,8 +57,7 @@ public class OpenHelper extends SQLiteOpenHelper {
 			"CREATE TRIGGER IF NOT EXISTS _t1_dn BEFORE DELETE ON " + TABLE_NOTES + " BEGIN " +
 				"INSERT INTO " + TABLE_UNDO + " VALUES('INSERT INTO " + TABLE_NOTES +
 				"(" + COLUMN_ID + "," + COLUMN_PARENT_ID + "," + COLUMN_TITLE + "," + COLUMN_BODY + "," + COLUMN_TYPE + "," + COLUMN_ARCHIVED + "," + COLUMN_THEME + "," + COLUMN_COUNTER + "," + COLUMN_DATE + "," + COLUMN_EXTRA + ")" +
-				"VALUES('||old." + COLUMN_ID + "||','||old." + COLUMN_PARENT_ID + "||','||quote(old." + COLUMN_TITLE + ")||','||quote(old." + COLUMN_BODY + ")||','||old." + COLUMN_TYPE + "||','||old." + COLUMN_ARCHIVED + "||','||old." + COLUMN_THEME + "||','||old." + COLUMN_COUNTER + "||','||quote(old." + COLUMN_DATE + ")||','||quote(old." + COLUMN_EXTRA + ")||')');" +
-				"DELETE FROM " + TABLE_NOTES + " WHERE " + COLUMN_PARENT_ID + " = old." + COLUMN_ID + "; END"
+				"VALUES('||old." + COLUMN_ID + "||','||old." + COLUMN_PARENT_ID + "||','||quote(old." + COLUMN_TITLE + ")||','||quote(old." + COLUMN_BODY + ")||','||old." + COLUMN_TYPE + "||','||old." + COLUMN_ARCHIVED + "||','||old." + COLUMN_THEME + "||','||old." + COLUMN_COUNTER + "||','||quote(old." + COLUMN_DATE + ")||','||quote(old." + COLUMN_EXTRA + ")||')'); END"
 		);
 	}
 

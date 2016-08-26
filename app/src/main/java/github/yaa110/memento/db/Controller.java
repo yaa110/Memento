@@ -124,6 +124,32 @@ public class Controller {
 	}
 
 	/**
+	 * Change the amount of category counter
+	 * @param categoryId the id of category
+	 * @param amount to be added (negative or positive)
+	 */
+	public void addCategoryCounter(long categoryId, int amount) {
+		SQLiteDatabase db = helper.getWritableDatabase();
+
+		try {
+			Cursor c = db.rawQuery(
+				"UPDATE " + OpenHelper.TABLE_NOTES + " SET " + OpenHelper.COLUMN_COUNTER + " = " + OpenHelper.COLUMN_COUNTER + " + ? WHERE " + OpenHelper.COLUMN_ID + " = ?",
+				new String[]{
+					String.format(Locale.US, "%d", amount),
+					String.format(Locale.US, "%d", categoryId)
+				}
+			);
+
+			if (c != null) {
+				c.moveToFirst();
+				c.close();
+			}
+		} finally {
+			db.close();
+		}
+	}
+
+	/**
 	 * Restores last deleted notes
 	 */
 	public void undoDeletion() {
@@ -173,8 +199,7 @@ public class Controller {
 	}
 
 	/**
-	 * Deletes a note or category from the database and decrements the counter
-	 * of category if the deleted object is an instance of Note class
+	 * Deletes a note or category (and its children) from the database
 	 * @param ids a list of the notes' IDs
 	 * @param categoryId the id of parent category
 	 */
@@ -185,14 +210,18 @@ public class Controller {
 			clearUndoTable(db);
 
 			StringBuilder where = new StringBuilder();
+			StringBuilder childWhere = new StringBuilder();
+
 			boolean needOR = false;
 			for (int i = 0; i < ids.length; i++) {
 				if (needOR) {
 					where.append(" OR ");
+					childWhere.append(" OR ");
 				} else {
 					needOR = true;
 				}
 				where.append(OpenHelper.COLUMN_ID).append(" = ?");
+				childWhere.append(OpenHelper.COLUMN_PARENT_ID).append(" = ?");
 			}
 
 			int count = db.delete(
@@ -201,8 +230,13 @@ public class Controller {
 				ids
 			);
 
-			if (count > 0 && categoryId != DatabaseModel.NEW_MODEL_ID) {
-				// Decrement the counter of category
+			if (categoryId == DatabaseModel.NEW_MODEL_ID) {
+				db.delete(
+					OpenHelper.TABLE_NOTES,
+					childWhere.toString(),
+					ids
+				);
+			} else {
 				Cursor c = db.rawQuery(
 					"UPDATE " + OpenHelper.TABLE_NOTES + " SET " + OpenHelper.COLUMN_COUNTER + " = " + OpenHelper.COLUMN_COUNTER + " - ? WHERE " + OpenHelper.COLUMN_ID + " = ?",
 					new String[]{

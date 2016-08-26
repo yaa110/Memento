@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,6 +106,8 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 									adapter.notifyItemRemoved(sortablePosition[i]);
 								}
 
+								toggleEmpty();
+
 								StringBuilder message = new StringBuilder();
 								message.append(length).append(" ").append(getItemName());
 								if (length > 1) message.append("s were deleted");
@@ -120,6 +121,9 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 												@Override
 												public void run() {
 													Controller.instance.undoDeletion();
+													if (categoryId != DatabaseModel.NEW_MODEL_ID) {
+														Controller.instance.addCategoryCounter(categoryId, length);
+													}
 
 													Collections.sort(undos, new Comparator<T>() {
 														@Override
@@ -265,6 +269,7 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 	public T deleteItem(int position) {
 		T item = items.remove(position);
 		adapter.notifyItemRemoved(position);
+		toggleEmpty();
 		return item;
 	}
 

@@ -141,6 +141,7 @@ public class CategoryFragment extends RecyclerFragment<Note, NoteAdapter> {
 													@Override
 													public void run() {
 														Controller.instance.undoDeletion();
+														Controller.instance.addCategoryCounter(deletedItem.categoryId, 1);
 
 														getActivity().runOnUiThread(new Runnable() {
 															@Override
