@@ -6,8 +6,7 @@ import android.support.annotation.StringRes;
 public class Drawer {
 	public static final int TYPE_SPLITTER = 0;
 	public static final int TYPE_ABOUT = 1;
-	public static final int TYPE_ARCHIVED = 2;
-	public static final int TYPE_SETTINGS = 3;
+	public static final int TYPE_SETTINGS = 2;
 
 	public int type;
 	@DrawableRes

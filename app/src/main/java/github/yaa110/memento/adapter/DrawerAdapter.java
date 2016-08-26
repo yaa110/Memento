@@ -13,7 +13,7 @@ import github.yaa110.memento.R;
 import github.yaa110.memento.model.Drawer;
 
 public class DrawerAdapter extends BaseAdapter {
-	private static final int LENGTH = 3;
+	private static final int LENGTH = 1;
 
 	private Context context;
 	private ClickListener listener;
@@ -29,14 +29,6 @@ public class DrawerAdapter extends BaseAdapter {
 		drawers = new Drawer[LENGTH];
 
 		int counter = -1;
-
-		drawers[++counter] = new Drawer(
-			Drawer.TYPE_ARCHIVED,
-			R.drawable.drawer_archived,
-			R.string.archived
-		);
-
-		drawers[++counter] = Drawer.divider();
 
 		drawers[++counter] = new Drawer(
 			Drawer.TYPE_ABOUT,
