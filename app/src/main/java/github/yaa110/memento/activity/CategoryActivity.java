@@ -72,6 +72,11 @@ public class CategoryActivity extends AppCompatActivity implements RecyclerFragm
 
 	@Override
 	public void onBackPressed() {
+		if (fragment.isFabOpen) {
+			fragment.toggleFab(true);
+			return;
+		}
+
 		if (fragment.selectionState) {
 			fragment.toggleSelection(false);
 			return;

@@ -55,6 +55,55 @@
             android:text="@string/no_notes_desc"/>
     </LinearLayout>
 
+    <View
+        android:id="@+id/protector"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_anchorGravity="top|start"
+        android:clickable="true"
+        android:visibility="gone"
+        android:background="@color/protector" />
+
+    <github.yaa110.memento.widget.Fab
+        android:id="@+id/fab_type"
+        android:layout_width="@dimen/fab_mini"
+        android:layout_height="@dimen/fab_mini"
+        android:visibility="gone"
+        android:elevation="4dp"
+        android:scaleType="center"
+        app:layout_anchor="@+id/recyclerView"
+        app:layout_anchorGravity="bottom|end"
+        android:clickable="true"
+        android:background="?attr/fabColor"
+        app:srcCompat="@drawable/fab_type"
+        android:contentDescription="@string/new_note"
+        android:layout_gravity="end|bottom"
+        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="140dp"
+        app:layout_behavior="github.yaa110.memento.inner.FabBehavior"
+        tools:ignore="MissingPrefix,UnusedAttribute"/>
+
+    <github.yaa110.memento.widget.Fab
+        android:id="@+id/fab_drawing"
+        android:layout_width="@dimen/fab_mini"
+        android:layout_height="@dimen/fab_mini"
+        android:elevation="4dp"
+        android:scaleType="center"
+        app:layout_anchor="@+id/recyclerView"
+        app:layout_anchorGravity="bottom|end"
+        android:clickable="true"
+        android:background="?attr/fabColor"
+        android:visibility="gone"
+        app:srcCompat="@drawable/fab_drawing"
+        android:contentDescription="@string/new_note"
+        android:layout_gravity="end|bottom"
+        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="88dp"
+        app:layout_behavior="github.yaa110.memento.inner.FabBehavior"
+        tools:ignore="MissingPrefix,UnusedAttribute"/>
+
     <github.yaa110.memento.widget.Fab
         android:id="@+id/fab"
         android:layout_width="@dimen/fab"

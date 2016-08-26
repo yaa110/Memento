@@ -34,6 +34,7 @@
     <color name="transparent_white">#bbffffff</color>
     <color name="black">#000000</color>
 
+    <color name="protector">#99FFFFFF</color>
     <color name="ripple_dark">#1dffffff</color>
     <color name="ripple_light">#1d000000</color>
     <color name="bg">#fafafa</color>

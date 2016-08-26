@@ -62,6 +62,8 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 		selectionToolbar = (Toolbar) getActivity().findViewById(R.id.selection_toolbar);
 		selectionCounter = (TextView) selectionToolbar.findViewById(R.id.selection_counter);
 
+		init(view);
+
 		selectionToolbar.findViewById(R.id.selection_back).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -272,6 +274,8 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 		super.onAttach(context);
 		this.activity = (Callbacks) context;
 	}
+
+	public void init(View view) {}
 
 	public abstract void onClickFab();
 	public abstract int getLayout();
