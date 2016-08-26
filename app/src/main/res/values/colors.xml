@@ -42,4 +42,5 @@
     <color name="secondary_text">#89000000</color>
     <color name="hint_text">#61000000</color>
     <color name="gray">#888888</color>
+    <color name="gray_dark">#555555</color>
 </resources>

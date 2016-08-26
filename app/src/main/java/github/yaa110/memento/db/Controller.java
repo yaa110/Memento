@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import github.yaa110.memento.App;
-import github.yaa110.memento.model.Category;
 import github.yaa110.memento.model.DatabaseModel;
 import github.yaa110.memento.model.Note;
 
@@ -173,20 +171,21 @@ public class Controller {
 	 * @param <T> a type which extends DatabaseModel
 	 * @return true if the object is saved
 	 */
-	public <T extends DatabaseModel> boolean saveNote(T note, ContentValues values) {
+	public <T extends DatabaseModel> long saveNote(T note, ContentValues values) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 
 		try {
 			if (note.id > DatabaseModel.NEW_MODEL_ID) {
 				// Update note
-				return db.update(
+				db.update(
 					OpenHelper.TABLE_NOTES,
 					note.getContentValues(),
 					OpenHelper.COLUMN_ID + " = ?",
 					new String[]{
 						String.format(Locale.US, "%d", note.id)
 					}
-				) > 0;
+				);
+				return note.id;
 			} else {
 				// Create a new note
 				note.id = db.insert(
@@ -195,9 +194,7 @@ public class Controller {
 					values
 				);
 
-				boolean isDone = note.id > DatabaseModel.NEW_MODEL_ID;
-
-				if (isDone && note instanceof Note) {
+				if (note instanceof Note) {
 					// Increment the counter of category
 					Cursor c = db.rawQuery(
 						"UPDATE " + OpenHelper.TABLE_NOTES + " SET " + OpenHelper.COLUMN_COUNTER + " = " + OpenHelper.COLUMN_COUNTER + " + 1 WHERE " + OpenHelper.COLUMN_ID + " = ?",
@@ -212,10 +209,10 @@ public class Controller {
 					}
 				}
 
-				return isDone;
+				return note.id;
 			}
 		} catch (Exception e) {
-			return false;
+			return DatabaseModel.NEW_MODEL_ID;
 		} finally {
 			db.close();
 		}

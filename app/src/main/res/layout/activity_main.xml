@@ -44,6 +44,75 @@
                 android:textSize="@dimen/large_text" />
         </android.support.v7.widget.Toolbar>
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/selection_toolbar"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_width="match_parent"
+            android:background="@color/gray_dark"
+            android:visibility="gone"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp">
+
+            <ImageView
+                android:id="@+id/selection_back"
+                android:layout_width="@dimen/toolbar_height"
+                android:layout_height="@dimen/toolbar_height"
+                android:layout_gravity="start|top"
+                app:srcCompat="@drawable/ic_back"
+                android:clickable="true"
+                android:background="@drawable/ripple_circle"
+                android:scaleType="center"
+                tools:ignore="MissingPrefix"
+                android:contentDescription="@string/menu"/>
+
+            <ImageView
+                android:id="@+id/selection_delete"
+                android:layout_width="@dimen/toolbar_height"
+                android:layout_height="@dimen/toolbar_height"
+                android:layout_gravity="end|top"
+                app:srcCompat="@drawable/ic_delete"
+                android:clickable="true"
+                android:background="@drawable/ripple_circle"
+                android:scaleType="center"
+                tools:ignore="MissingPrefix"
+                android:contentDescription="@string/menu"/>
+
+            <ImageView
+                android:id="@+id/selection_edit"
+                android:layout_width="@dimen/toolbar_height"
+                android:layout_height="@dimen/toolbar_height"
+                android:layout_gravity="end|top"
+                app:srcCompat="@drawable/ic_edit"
+                android:clickable="true"
+                android:background="@drawable/ripple_circle"
+                android:scaleType="center"
+                tools:ignore="MissingPrefix"
+                android:contentDescription="@string/menu"/>
+
+            <ImageView
+                android:id="@+id/selection_archive"
+                android:layout_width="@dimen/toolbar_height"
+                android:layout_height="@dimen/toolbar_height"
+                android:layout_gravity="end|top"
+                app:srcCompat="@drawable/ic_archive"
+                android:clickable="true"
+                android:background="@drawable/ripple_circle"
+                android:scaleType="center"
+                tools:ignore="MissingPrefix"
+                android:contentDescription="@string/menu"/>
+
+            <TextView
+                android:id="@+id/selection_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:singleLine="true"
+                android:layout_gravity="start|center_vertical"
+                android:textColor="@color/white"
+                android:textSize="@dimen/large_text" />
+        </android.support.v7.widget.Toolbar>
+
         <FrameLayout
             android:id="@+id/container"
             android:layout_below="@+id/toolbar"

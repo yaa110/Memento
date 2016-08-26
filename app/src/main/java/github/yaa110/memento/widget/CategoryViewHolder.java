@@ -26,8 +26,8 @@ public class CategoryViewHolder extends ModelViewHolder<Category> {
 
 	@Override
 	public void populate(Category item) {
-		badge.setText(item.title.substring(0, 1));
-		badge.setBackgroundColor(item.getThemeColor());
+		badge.setText(item.title.substring(0, 1).toUpperCase(Locale.US));
+		badge.setBackgroundResource(item.getThemeBackground());
 		title.setText(item.title);
 		if (item.counter == 0) counter.setText("");
 		else if (item.counter == 1) counter.setText(R.string.one_note);

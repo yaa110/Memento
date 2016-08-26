@@ -3,7 +3,6 @@ package github.yaa110.memento.fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,12 +19,18 @@ import github.yaa110.memento.model.DatabaseModel;
 
 public class CategoryFragment extends RecyclerFragment<Category, CategoryAdapter> {
 	private int categoryDialogTheme = Category.THEME_GREEN;
-	private boolean categoryDialogIsEditing = false;
 
 	private ModelAdapter.ClickListener listener = new ModelAdapter.ClickListener() {
 		@Override
 		public void onClick(DatabaseModel item, int position) {
-			// TODO onChangeSelection
+			categoryDialogTheme = ((Category) item).theme;
+			displayCategoryDialog(
+				R.string.edit_category,
+				R.string.edit,
+				item.title,
+				item.id,
+				position
+			);
 		}
 
 		@Override
@@ -39,11 +44,16 @@ public class CategoryFragment extends RecyclerFragment<Category, CategoryAdapter
 	@Override
 	public void onClickFab() {
 		categoryDialogTheme = Category.THEME_GREEN;
-		categoryDialogIsEditing = false;
-		displayCategoryDialog(R.string.new_category, R.string.create, "");
+		displayCategoryDialog(
+			R.string.new_category,
+			R.string.create,
+			"",
+			DatabaseModel.NEW_MODEL_ID,
+			0
+		);
 	}
 
-	private void displayCategoryDialog(@StringRes int title, @StringRes int positiveText, String categoryTitle) {
+	private void displayCategoryDialog(@StringRes int title, @StringRes int positiveText, final String categoryTitle, final long categoryId, final int position) {
 		MaterialDialog dialog = new MaterialDialog.Builder(getContext())
 			.title(title)
 			.positiveText(positiveText)
@@ -52,7 +62,52 @@ public class CategoryFragment extends RecyclerFragment<Category, CategoryAdapter
 			.onPositive(new MaterialDialog.SingleButtonCallback() {
 				@Override
 				public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-					// TODO
+					//noinspection ConstantConditions
+					String inputTitle = ((EditText) dialog.getCustomView().findViewById(R.id.title_txt)).getText().toString();
+					if (inputTitle.isEmpty()) {
+						inputTitle = "Unnamed";
+					}
+
+					final Category category = new Category();
+					category.id = categoryId;
+
+					final boolean isEditing = categoryId != DatabaseModel.NEW_MODEL_ID;
+
+					if (!isEditing) {
+						category.counter = 0;
+						category.type = DatabaseModel.TYPE_CATEGORY;
+						category.createdAt = System.currentTimeMillis();
+						category.isArchived = false;
+					}
+
+					category.title = inputTitle;
+					category.theme = categoryDialogTheme;
+
+					new Thread() {
+						@Override
+						public void run() {
+							final long id = category.save();
+							if (id != DatabaseModel.NEW_MODEL_ID) {
+								getActivity().runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										if (isEditing) {
+											Category categoryInItems = items.get(position);
+											categoryInItems.theme = category.theme;
+											categoryInItems.title = category.title;
+											refreshItem(position);
+										} else {
+											category.id = id;
+											addItem(category, position);
+										}
+									}
+								});
+							}
+
+							interrupt();
+						}
+					}.start();
+
 				}
 			})
 			.onNegative(new MaterialDialog.SingleButtonCallback() {

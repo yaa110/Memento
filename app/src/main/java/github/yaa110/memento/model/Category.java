@@ -2,7 +2,6 @@ package github.yaa110.memento.model;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.graphics.Color;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -22,18 +21,6 @@ public class Category extends DatabaseModel {
 	public static final int THEME_GREEN     = 6;
 	public static final int THEME_AMBER     = 7;
 	public static final int THEME_ORANGE    = 8;
-
-	private String[] colors = {
-		"#F44336",
-		"#E91E63",
-		"#9C27B0",
-		"#2196F3",
-		"#0097A7",
-		"#00796B",
-		"#4CAF50",
-		"#FFA000",
-		"#FF5722",
-	};
 
 	public int theme;
 	public int counter;
@@ -74,8 +61,29 @@ public class Category extends DatabaseModel {
 	/**
 	 * @return color of the theme
 	 */
-	public int getThemeColor() {
-		return Color.parseColor(colors[theme]);
+	public int getThemeBackground() {
+		switch (theme) {
+			case THEME_RED:
+				return R.drawable.circle_red;
+			case THEME_PINK:
+				return R.drawable.circle_pink;
+			case THEME_AMBER:
+				return R.drawable.circle_amber;
+			case THEME_BLUE:
+				return R.drawable.circle_blue;
+			case THEME_CYAN:
+				return R.drawable.circle_cyan;
+			case THEME_GREEN:
+				return R.drawable.circle_green;
+			case THEME_ORANGE:
+				return R.drawable.circle_orange;
+			case THEME_PURPLE:
+				return R.drawable.circle_purple;
+			case THEME_TEAL:
+				return R.drawable.circle_teal;
+		}
+
+		return R.drawable.circle_main;
 	}
 
 	/**

@@ -85,6 +85,8 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 						items = (ArrayList<T>) Note.all(categoryId);
 					}
 
+					selected = new ArrayList<>();
+
 					adapter = getAdapterClass().getDeclaredConstructor(
 						ArrayList.class,
 						ArrayList.class,
@@ -120,6 +122,20 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 			empty.setVisibility(View.GONE);
 			recyclerView.setVisibility(View.VISIBLE);
 		}
+	}
+
+	public void refreshItem(int position) {
+		adapter.notifyItemChanged(position);
+	}
+
+	public void addItem(T item, int position) {
+		if (items.isEmpty()) {
+			empty.setVisibility(View.GONE);
+			recyclerView.setVisibility(View.VISIBLE);
+		}
+
+		items.add(position, item);
+		adapter.notifyItemInserted(position);
 	}
 
 	@Override

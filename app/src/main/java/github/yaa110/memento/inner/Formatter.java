@@ -4,7 +4,7 @@ import android.text.format.DateFormat;
 
 public class Formatter {
 	private static final String DATE_FORMAT = "E, LLLL d, yyyy";
-	private static final String SHORT_DATE_FORMAT = "LL d, yyyy";
+	private static final String SHORT_DATE_FORMAT = "LLL d, yyyy";
 
 	public static CharSequence formatDate() {
 		return formatDate(System.currentTimeMillis());

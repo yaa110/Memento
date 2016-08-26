@@ -41,7 +41,7 @@ abstract public class DatabaseModel {
 	 * Inserts or updates a note or category
 	 * @return true if the note is saved.
 	 */
-	public boolean save() {
+	public long save() {
 		return Controller.instance.saveNote(this, getContentValues());
 	}
 
@@ -61,7 +61,7 @@ abstract public class DatabaseModel {
 		ContentValues values = new ContentValues();
 		values.put(OpenHelper.COLUMN_ARCHIVED, !isArchived);
 
-		if (Controller.instance.saveNote(this, values)) {
+		if (Controller.instance.saveNote(this, values) != DatabaseModel.NEW_MODEL_ID) {
 			isArchived = !isArchived;
 			return true;
 		}
@@ -73,4 +73,9 @@ abstract public class DatabaseModel {
 	 * @return ContentValue object to be saved or updated
 	 */
 	abstract public ContentValues getContentValues();
+
+	@Override
+	public int hashCode() {
+		return (int) id;
+	}
 }

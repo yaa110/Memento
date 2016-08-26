@@ -8,5 +8,5 @@
     <dimen name="fab">56dp</dimen>
     <dimen name="fab_mini">40dp</dimen>
     <dimen name="drawer_height">48dp</dimen>
-    <dimen name="badge_size">48dp</dimen>
+    <dimen name="badge_size">42dp</dimen>
 </resources>
