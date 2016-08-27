@@ -1,1 +1,2 @@
 -keep class github.yaa110.memento.adapter.** { *; }
+-keep class github.yaa110.memento.model.** { *; }
