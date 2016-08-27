@@ -49,6 +49,7 @@
                 android:layout_height="@dimen/tool_size"
                 android:background="@drawable/tool"
                 android:clickable="true"
+                android:scaleType="center"
                 android:contentDescription="@string/tool"
                 app:srcCompat="@drawable/ic_bold" />
 
@@ -60,6 +61,7 @@
                 android:contentDescription="@string/tool"
                 android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
+                android:scaleType="center"
                 android:clickable="true"
                 app:srcCompat="@drawable/ic_italic" />
 
@@ -68,6 +70,7 @@
                 android:layout_width="@dimen/tool_size"
                 android:layout_height="@dimen/tool_size"
                 android:background="@drawable/tool"
+                android:scaleType="center"
                 android:contentDescription="@string/tool"
                 android:clickable="true"
                 android:layout_marginLeft="5dp"
