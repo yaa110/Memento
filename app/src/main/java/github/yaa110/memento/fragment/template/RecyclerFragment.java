@@ -211,7 +211,7 @@ abstract public class RecyclerFragment<T extends DatabaseModel, A extends ModelA
 		}
 	}
 
-	private void loadItems() {
+	public void loadItems() {
 		new Thread() {
 			@SuppressWarnings("unchecked")
 			@Override

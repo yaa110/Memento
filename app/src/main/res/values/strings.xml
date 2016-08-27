@@ -43,4 +43,6 @@
     <string name="no_mounted_sd">No SD-Card was found</string>
     <string name="backup_saved">Backup data were saved at %1$s</string>
     <string name="backup_error">Backup error</string>
+    <string name="data_restored">Back data were successfully restored.</string>
+    <string name="restore_error">Restore error</string>
 </resources>

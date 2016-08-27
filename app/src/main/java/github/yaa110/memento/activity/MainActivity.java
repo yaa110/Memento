@@ -20,12 +20,17 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import org.json.JSONArray;
+
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import github.yaa110.memento.App;
 import github.yaa110.memento.R;
 import github.yaa110.memento.adapter.DrawerAdapter;
 import github.yaa110.memento.db.Controller;
+import github.yaa110.memento.dialog.ImportDialog;
 import github.yaa110.memento.dialog.SaveDialog;
 import github.yaa110.memento.fragment.MainFragment;
 import github.yaa110.memento.fragment.template.RecyclerFragment;
@@ -131,9 +136,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 		} else {
 			exitStatus = true;
 
-			try {
-				Snackbar.make(fragment.fab != null ? fragment.fab : toolbar, R.string.exit_message, Snackbar.LENGTH_LONG).show();
-			} catch (Exception ignored) {}
+			Snackbar.make(fragment.fab != null ? fragment.fab : toolbar, R.string.exit_message, Snackbar.LENGTH_LONG).show();
 
 			handler.postDelayed(runnable, 3500);
 		}
@@ -200,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 									backupData();
 									break;
 								case Drawer.TYPE_RESTORE:
-									// TODO settings drawer
+									restoreData();
 									break;
 								case Drawer.TYPE_SETTINGS:
 									// TODO settings drawer
@@ -234,6 +237,69 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 	@Override
 	public void toggleOneSelection(boolean state) {
 		selectionEdit.setVisibility(state ? View.VISIBLE : View.GONE);
+	}
+
+	private void restoreData() {
+		ImportDialog.newInstance(
+			R.string.restore,
+			new String[]{App.BACKUP_EXTENSION},
+			new ImportDialog.ImportListener() {
+				@Override
+				public void onSelect(final String path) {
+					new Thread() {
+						@Override
+						public void run() {
+							try {
+								readBackupFile(path);
+
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										fragment.loadItems();
+
+										Snackbar.make(fragment.fab != null ? fragment.fab : toolbar, R.string.data_restored, Snackbar.LENGTH_LONG).show();
+									}
+								});
+							} catch (final Exception e){
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										new MaterialDialog.Builder(MainActivity.this)
+											.title(R.string.restore_error)
+											.positiveText(R.string.ok)
+											.content(e.getMessage())
+											.onPositive(new MaterialDialog.SingleButtonCallback() {
+												@Override
+												public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+													dialog.dismiss();
+												}
+											})
+											.show();
+									}
+								});
+							} finally {
+								interrupt();
+							}
+						}
+					}.start();
+				}
+
+				@Override
+				public void onError(String msg) {
+					new MaterialDialog.Builder(MainActivity.this)
+						.title(R.string.restore_error)
+						.positiveText(R.string.ok)
+						.content(msg)
+						.onPositive(new MaterialDialog.SingleButtonCallback() {
+							@Override
+							public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+								dialog.dismiss();
+							}
+						})
+						.show();
+				}
+			}
+		).show(getSupportFragmentManager(), "");
 	}
 
 	private void backupData() {
@@ -301,6 +367,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 				}
 			}
 		).show(getSupportFragmentManager(), "");
+	}
+
+	private void readBackupFile(String path) throws Exception {
+		DataInputStream dis = new DataInputStream(new FileInputStream(path));
+		byte[] backup_data = new byte[dis.available()];
+		dis.readFully(backup_data);
+		JSONArray json = new JSONArray(new String(backup_data));
+		dis.close();
+
+		Controller.instance.readBackup(json);
 	}
 
 	private void saveBackupFile(String path) throws Exception {

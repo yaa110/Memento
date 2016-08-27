@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.FileOutputStream;
@@ -45,6 +46,42 @@ public class Controller {
 	 */
 	public static void create(Context context) {
 		instance = new Controller(context);
+	}
+
+	/**
+	 * Reads data from json array
+	 * @param json an array of json objects
+	 * @throws Exception
+	 */
+	public void readBackup(JSONArray json) throws Exception {
+		SQLiteDatabase db = helper.getReadableDatabase();
+
+		try {
+			int length = json.length();
+			for (int i = 0; i < length; i++) {
+				JSONObject item = json.getJSONObject(i);
+
+				ContentValues values = new ContentValues();
+				values.put(OpenHelper.COLUMN_ID, item.getLong(OpenHelper.COLUMN_ID));
+				values.put(OpenHelper.COLUMN_TITLE, item.getString(OpenHelper.COLUMN_TITLE));
+				values.put(OpenHelper.COLUMN_BODY, item.getString(OpenHelper.COLUMN_BODY));
+				values.put(OpenHelper.COLUMN_TYPE, item.getInt(OpenHelper.COLUMN_TYPE));
+				values.put(OpenHelper.COLUMN_DATE, item.getString(OpenHelper.COLUMN_DATE));
+				values.put(OpenHelper.COLUMN_ARCHIVED, item.getInt(OpenHelper.COLUMN_ARCHIVED));
+				values.put(OpenHelper.COLUMN_THEME, item.getInt(OpenHelper.COLUMN_THEME));
+				values.put(OpenHelper.COLUMN_COUNTER, item.getInt(OpenHelper.COLUMN_COUNTER));
+				values.put(OpenHelper.COLUMN_PARENT_ID, item.getLong(OpenHelper.COLUMN_PARENT_ID));
+				values.put(OpenHelper.COLUMN_EXTRA, item.getString(OpenHelper.COLUMN_EXTRA));
+
+				db.replace(
+					OpenHelper.TABLE_NOTES,
+					null,
+					values
+				);
+			}
+		} finally {
+			db.close();
+		}
 	}
 
 	/**

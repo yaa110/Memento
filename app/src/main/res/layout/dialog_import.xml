@@ -20,7 +20,7 @@
 
     <include layout="@layout/splitter" />
 
-    <github.yaa110.bilan.widget.FixedHeightRecyclerView
+    <github.yaa110.memento.widget.FixedHeightRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
