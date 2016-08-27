@@ -1,6 +1,6 @@
 Memento
 =======
-A simple note taking application
+A simple note taking app to apply for Android Developer at Cafe Bazaar
 
 **Author**  Navid Fathollahzade
 

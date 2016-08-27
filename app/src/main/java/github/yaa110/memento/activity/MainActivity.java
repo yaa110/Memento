@@ -197,7 +197,17 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 						public void run() {
 							switch (type) {
 								case Drawer.TYPE_ABOUT:
-									// TODO about drawer
+									new MaterialDialog.Builder(MainActivity.this)
+										.title(R.string.app_name)
+										.content(R.string.about_desc)
+										.positiveText(R.string.ok)
+										.onPositive(new MaterialDialog.SingleButtonCallback() {
+											@Override
+											public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+												dialog.dismiss();
+											}
+										})
+										.show();
 									break;
 								case Drawer.TYPE_BACKUP:
 									backupData();
