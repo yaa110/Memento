@@ -99,7 +99,14 @@ public class Controller {
 			);
 
 			if (c != null) {
+				boolean needComma = false;
 				while (c.moveToNext()) {
+					if (needComma) {
+						fos.write(",".getBytes("UTF-8"));
+					} else {
+						needComma = true;
+					}
+
 					JSONObject item = new JSONObject();
 					item.put(OpenHelper.COLUMN_ID, c.getLong(c.getColumnIndex(OpenHelper.COLUMN_ID)));
 					item.put(OpenHelper.COLUMN_TITLE, c.getString(c.getColumnIndex(OpenHelper.COLUMN_TITLE)));
