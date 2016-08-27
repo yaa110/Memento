@@ -1,1 +1,1 @@
-include ':app', ':wysiwyg'
+include ':app'
