@@ -20,8 +20,13 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import java.io.FileOutputStream;
+
+import github.yaa110.memento.App;
 import github.yaa110.memento.R;
 import github.yaa110.memento.adapter.DrawerAdapter;
+import github.yaa110.memento.db.Controller;
+import github.yaa110.memento.dialog.SaveDialog;
 import github.yaa110.memento.fragment.MainFragment;
 import github.yaa110.memento.fragment.template.RecyclerFragment;
 import github.yaa110.memento.inner.Animator;
@@ -184,20 +189,25 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 					// wait for completion of drawer animation
 					sleep(500);
 
-					switch (type) {
-						case Drawer.TYPE_ABOUT:
-							// TODO about drawer
-							break;
-						case Drawer.TYPE_BACKUP:
-							// TODO settings drawer
-							break;
-						case Drawer.TYPE_RESTORE:
-							// TODO settings drawer
-							break;
-						case Drawer.TYPE_SETTINGS:
-							// TODO settings drawer
-							break;
-					}
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							switch (type) {
+								case Drawer.TYPE_ABOUT:
+									// TODO about drawer
+									break;
+								case Drawer.TYPE_BACKUP:
+									backupData();
+									break;
+								case Drawer.TYPE_RESTORE:
+									// TODO settings drawer
+									break;
+								case Drawer.TYPE_SETTINGS:
+									// TODO settings drawer
+									break;
+							}
+						}
+					});
 
 					interrupt();
 				} catch (Exception ignored) {
@@ -224,6 +234,86 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 	@Override
 	public void toggleOneSelection(boolean state) {
 		selectionEdit.setVisibility(state ? View.VISIBLE : View.GONE);
+	}
+
+	private void backupData() {
+		SaveDialog.newInstance(
+			R.string.backup,
+			"memento",
+			App.BACKUP_EXTENSION,
+			new SaveDialog.SaveListener() {
+				@Override
+				public void onSelect(final String path) {
+					new Thread() {
+						@Override
+						public void run() {
+							try {
+								saveBackupFile(path);
+
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										new MaterialDialog.Builder(MainActivity.this)
+											.title(R.string.backup)
+											.positiveText(R.string.ok)
+											.content(getString(R.string.backup_saved, path))
+											.onPositive(new MaterialDialog.SingleButtonCallback() {
+												@Override
+												public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+													dialog.dismiss();
+												}
+											})
+											.show();
+									}
+								});
+							} catch (final Exception e) {
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										new MaterialDialog.Builder(MainActivity.this)
+											.title(R.string.backup_error)
+											.positiveText(R.string.ok)
+											.content(e.getMessage())
+											.onPositive(new MaterialDialog.SingleButtonCallback() {
+												@Override
+												public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+													dialog.dismiss();
+												}
+											})
+											.show();
+									}
+								});
+							} finally {
+								interrupt();
+							}
+						}
+					}.start();
+				}
+
+				@Override
+				public void onError() {
+
+				}
+
+				@Override
+				public void onCancel() {
+
+				}
+			}
+		).show(getSupportFragmentManager(), "");
+	}
+
+	private void saveBackupFile(String path) throws Exception {
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(path);
+			fos.write("[".getBytes("UTF-8"));
+			Controller.instance.writeBackup(fos);
+			fos.write("]".getBytes("UTF-8"));
+			fos.flush();
+		} finally {
+			if (fos != null) fos.close();
+		}
 	}
 
 	private void requestPermission() {
@@ -267,7 +357,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		if (Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permissions[0])) {
 			if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-				Toast.makeText(getApplicationContext(), R.string.permission_granted, Toast.LENGTH_SHORT).show();;
+				Toast.makeText(getApplicationContext(), R.string.permission_granted, Toast.LENGTH_SHORT).show();
 			} else {
 				permissionNotGranted = true;
 			}

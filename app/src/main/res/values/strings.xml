@@ -41,4 +41,6 @@
     <string name="required">This field is required</string>
     <string name="icon">icon</string>
     <string name="no_mounted_sd">No SD-Card was found</string>
+    <string name="backup_saved">Backup data were saved at %1$s</string>
+    <string name="backup_error">Backup error</string>
 </resources>

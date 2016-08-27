@@ -16,7 +16,7 @@
         android:singleLine="true"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
-        android:gravity="right"
+        android:gravity="start"
         android:textColor="@color/main_text"
         android:textSize="@dimen/medium_text"/>
 

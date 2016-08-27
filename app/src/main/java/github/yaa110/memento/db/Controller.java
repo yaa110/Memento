@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.json.JSONObject;
+
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -42,6 +45,44 @@ public class Controller {
 	 */
 	public static void create(Context context) {
 		instance = new Controller(context);
+	}
+
+	/**
+	 * Writes data to file
+	 * @param fos an object of FileOutputStream
+	 * @throws Exception
+	 */
+	public void writeBackup(FileOutputStream fos) throws Exception {
+		SQLiteDatabase db = helper.getReadableDatabase();
+
+		try {
+			Cursor c = db.query(
+				OpenHelper.TABLE_NOTES,
+				null, null, null, null, null, null
+			);
+
+			if (c != null) {
+				while (c.moveToNext()) {
+					JSONObject item = new JSONObject();
+					item.put(OpenHelper.COLUMN_ID, c.getLong(c.getColumnIndex(OpenHelper.COLUMN_ID)));
+					item.put(OpenHelper.COLUMN_TITLE, c.getString(c.getColumnIndex(OpenHelper.COLUMN_TITLE)));
+					item.put(OpenHelper.COLUMN_BODY, c.getString(c.getColumnIndex(OpenHelper.COLUMN_BODY)));
+					item.put(OpenHelper.COLUMN_TYPE, c.getInt(c.getColumnIndex(OpenHelper.COLUMN_TYPE)));
+					item.put(OpenHelper.COLUMN_DATE, c.getString(c.getColumnIndex(OpenHelper.COLUMN_DATE)));
+					item.put(OpenHelper.COLUMN_ARCHIVED, c.getInt(c.getColumnIndex(OpenHelper.COLUMN_ARCHIVED)));
+					item.put(OpenHelper.COLUMN_THEME, c.getInt(c.getColumnIndex(OpenHelper.COLUMN_THEME)));
+					item.put(OpenHelper.COLUMN_COUNTER, c.getInt(c.getColumnIndex(OpenHelper.COLUMN_COUNTER)));
+					item.put(OpenHelper.COLUMN_PARENT_ID, c.getLong(c.getColumnIndex(OpenHelper.COLUMN_PARENT_ID)));
+					item.put(OpenHelper.COLUMN_EXTRA, c.getString(c.getColumnIndex(OpenHelper.COLUMN_EXTRA)));
+
+					fos.write(item.toString().getBytes("UTF-8"));
+				}
+
+				c.close();
+			}
+		} finally {
+			db.close();
+		}
 	}
 
 	/**

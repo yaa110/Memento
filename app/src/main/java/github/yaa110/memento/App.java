@@ -20,6 +20,8 @@ public class App extends Application {
 	public static int sortNotesBy;
 	public static String last_path;
 
+	public static final String BACKUP_EXTENSION = "mem";
+
 	/* Preferences' Keys */
 	public static final String SMART_FAB_KEY = "a1";
 	public static final String SORT_CATEGORIES_KEY = "a2";
