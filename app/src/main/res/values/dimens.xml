@@ -10,4 +10,8 @@
     <dimen name="fab_mini">40dp</dimen>
     <dimen name="drawer_height">48dp</dimen>
     <dimen name="badge_size">42dp</dimen>
+    <dimen name="dialog_title">18sp</dimen>
+    <dimen name="dialog_button">14sp</dimen>
+    <dimen name="dialog_button_width">64dp</dimen>
+    <dimen name="dialog_button_height">36dp</dimen>
 </resources>

@@ -34,4 +34,11 @@
     <string name="permission_granted">Permission granted</string>
     <string name="backup">Backup data</string>
     <string name="restore">Restore data</string>
+    <string name="new_folder">New folder</string>
+    <string name="choose">Choose</string>
+    <string name="ok">OK</string>
+    <string name="delete">Delete</string>
+    <string name="required">This field is required</string>
+    <string name="icon">icon</string>
+    <string name="no_mounted_sd">No SD-Card was found</string>
 </resources>

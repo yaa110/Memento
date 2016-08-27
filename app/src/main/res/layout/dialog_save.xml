@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/title_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="24dp"
+        android:paddingBottom="20dp"
+        android:singleLine="true"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:gravity="right"
+        android:textColor="@color/main_text"
+        android:textSize="@dimen/medium_text"/>
+
+    <include layout="@layout/splitter" />
+
+    <github.yaa110.memento.widget.FixedHeightRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:scrollbars="vertical" />
+
+    <include layout="@layout/splitter" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/new_btn"
+            android:layout_width="@dimen/dialog_button_height"
+            android:layout_height="@dimen/dialog_button_height"
+            android:scaleType="center"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:clickable="true"
+            app:srcCompat="@drawable/new_folder"
+            android:background="@drawable/ripple_rect"
+            android:contentDescription="@string/new_folder"
+            tools:ignore="MissingPrefix"/>
+
+        <TextView
+            android:id="@+id/positive_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dialog_button_height"
+            android:minWidth="@dimen/dialog_button_width"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:padding="8dp"
+            android:clickable="true"
+            android:background="@drawable/ripple_rect"
+            android:textSize="@dimen/dialog_button"
+            android:text="@string/choose"
+            android:textColor="@color/main_color"/>
+
+        <TextView
+            android:id="@+id/negative_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dialog_button_height"
+            android:minWidth="@dimen/dialog_button_width"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/positive_btn"
+            android:layout_toEndOf="@+id/positive_btn"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:padding="8dp"
+            android:clickable="true"
+            android:text="@string/cancel"
+            android:background="@drawable/ripple_rect"
+            android:textSize="@dimen/dialog_button"
+            android:textColor="@color/secondary_text"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
