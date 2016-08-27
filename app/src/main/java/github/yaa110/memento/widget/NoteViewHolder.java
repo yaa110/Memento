@@ -26,7 +26,6 @@ public class NoteViewHolder extends ModelViewHolder<Note> {
 
 	@Override
 	public void populate(Note item) {
-		badge.setBackgroundResource(item.getThemeBackground());
 		if (item.type == DatabaseModel.TYPE_NOTE_DRAWING) {
 			badge.setImageResource(R.drawable.fab_drawing);
 		} else {

@@ -23,4 +23,15 @@
     <string name="undo">Undo</string>
     <string name="back">back</string>
     <string name="new_note">New note</string>
+    <string name="tool">tool</string>
+    <string name="start_drawing">Start drawing</string>
+    <string name="permission">Permission</string>
+    <string name="storage_permission">Memento needs to access your external storage to store data.</string>
+    <string name="request">Request</string>
+    <string name="permission_error">Permission not granted</string>
+    <string name="permission_error_desc">Memento might work incorrectly without permission to access the external storage.</string>
+    <string name="continue_anyway">Continue anyway</string>
+    <string name="permission_granted">Permission granted</string>
+    <string name="backup">Backup data</string>
+    <string name="restore">Restore data</string>
 </resources>
