@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/bg"
     android:padding="16dp">
@@ -31,10 +32,55 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <in.nashapp.androidsummernote.Summernote
-        android:id="@+id/wysiwyg_txt"
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/action_bold"
+                android:layout_width="@dimen/tool_size"
+                android:layout_height="@dimen/tool_size"
+                android:background="@drawable/tool"
+                android:clickable="true"
+                android:contentDescription="@string/tool"
+                app:srcCompat="@drawable/ic_bold" />
+
+            <ImageView
+                android:id="@+id/action_italic"
+                android:layout_width="@dimen/tool_size"
+                android:layout_height="@dimen/tool_size"
+                android:background="@drawable/tool"
+                android:contentDescription="@string/tool"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_italic" />
+
+            <ImageView
+                android:id="@+id/action_underline"
+                android:layout_width="@dimen/tool_size"
+                android:layout_height="@dimen/tool_size"
+                android:background="@drawable/tool"
+                android:contentDescription="@string/tool"
+                android:clickable="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                app:srcCompat="@drawable/ic_underline" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <jp.wasabeef.richeditor.RichEditor
+        android:id="@+id/editor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"/>
+        android:gravity="top|start" />
 
 </LinearLayout>

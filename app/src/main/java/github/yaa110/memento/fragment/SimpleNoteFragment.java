@@ -1,14 +1,15 @@
 package github.yaa110.memento.fragment;
 
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import github.yaa110.memento.R;
 import github.yaa110.memento.fragment.template.NoteFragment;
 import github.yaa110.memento.model.DatabaseModel;
-import in.nashapp.androidsummernote.Summernote;
+import jp.wasabeef.richeditor.RichEditor;
 
 public class SimpleNoteFragment extends NoteFragment {
-	private Summernote body;
+	private RichEditor body;
 
 	public SimpleNoteFragment() {}
 
@@ -20,7 +21,7 @@ public class SimpleNoteFragment extends NoteFragment {
 	@Override
 	public void saveNote(final SaveListener listener) {
 		super.saveNote(listener);
-		note.body = body.getText();
+		note.body = body.getHtml();
 
 		new Thread() {
 			@Override
@@ -37,7 +38,28 @@ public class SimpleNoteFragment extends NoteFragment {
 
 	@Override
 	public void init(View view) {
-		body = (Summernote) view.findViewById(R.id.wysiwyg_txt);
-		body.setText(note.body);
+		body = (RichEditor) view.findViewById(R.id.editor);
+		body.setPlaceholder("Note");
+		body.setEditorBackgroundColor(ContextCompat.getColor(getContext(), R.color.bg));
+
+		view.findViewById(R.id.action_bold).setOnClickListener(new View.OnClickListener() {
+			@Override public void onClick(View v) {
+				body.setBold();
+			}
+		});
+
+		view.findViewById(R.id.action_italic).setOnClickListener(new View.OnClickListener() {
+			@Override public void onClick(View v) {
+				body.setItalic();
+			}
+		});
+
+		view.findViewById(R.id.action_underline).setOnClickListener(new View.OnClickListener() {
+			@Override public void onClick(View v) {
+				body.setUnderline();
+			}
+		});
+
+		body.setHtml(note.body);
 	}
 }
