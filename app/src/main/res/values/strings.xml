@@ -45,4 +45,5 @@
     <string name="backup_error">Backup error</string>
     <string name="data_restored">Back data were successfully restored.</string>
     <string name="restore_error">Restore error</string>
+    <string name="not_implemented">Settings section has not been implemented for preview version.</string>
 </resources>

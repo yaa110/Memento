@@ -206,7 +206,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerFragment.
 									restoreData();
 									break;
 								case Drawer.TYPE_SETTINGS:
-									// TODO settings drawer
+									// TODO implement settings
+									new MaterialDialog.Builder(MainActivity.this)
+										.title(R.string.settings)
+										.content(R.string.not_implemented)
+										.positiveText(R.string.ok)
+										.onPositive(new MaterialDialog.SingleButtonCallback() {
+											@Override
+											public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+												dialog.dismiss();
+											}
+										})
+										.show();
 									break;
 							}
 						}
