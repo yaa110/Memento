@@ -45,6 +45,6 @@
     <string name="backup_error">Backup error</string>
     <string name="data_restored">Back data were successfully restored.</string>
     <string name="restore_error">Restore error</string>
-    <string name="not_implemented">This section has not been implemented for the preview version.</string>
-    <string name="about_desc">A simple note taking app to apply for Android Developer at Cafe Bazaar.\n\nAuthor: Navid Fathollahzade\nEmail:yaa110@gmail.com\nPhone: 09394246342</string>
+    <string name="not_implemented">This section has not been implemented for the beta version.</string>
+    <string name="about_desc">A simple note taking app</string>
 </resources>

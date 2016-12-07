@@ -1,17 +1,23 @@
 Memento
 =======
-A simple note taking app to apply for Android Developer at Cafe Bazaar
+A simple note taking app
 
-**Package name** github.yaa110.memento 
+## Features
 
-**Download** https://bitbucket.org/yaa110/memento/downloads/app-release.apk
+- Create categories with different theme colors
+- Take simple notes and make text bold or italicized
+- Take drawing notes
+- Backup and restore notes
 
-**Author**  Navid Fathollahzade
+## Dependencies
 
-**Email**   yaa110@gmail.com
+- **RichEditor for Android** [RichEditor for Android](https://github.com/wasabeef/richeditor-android) is a beautiful Rich Text WYSIWYG Editor for Android.
+- **Material Dialogs** [Material Dialogs](https://github.com/afollestad/material-dialogs) is a beautiful, fluid, and customizable dialogs API.
 
-**Linekin** https://www.linkedin.com/in/navidf
+## Screenshots
 
-**Github** https://github.com/yaa110
-
-**Phone**   09394246342
+![Screenshot](https://raw.githubusercontent.com/yaa110/Memento/master/Screenshots/001.png)
+![Screenshot](https://raw.githubusercontent.com/yaa110/Memento/master/Screenshots/002.png)
+![Screenshot](https://raw.githubusercontent.com/yaa110/Memento/master/Screenshots/003.png)
+![Screenshot](https://raw.githubusercontent.com/yaa110/Memento/master/Screenshots/004.png)
+![Screenshot](https://raw.githubusercontent.com/yaa110/Memento/master/Screenshots/005.png)
