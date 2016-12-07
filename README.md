@@ -9,6 +9,8 @@ A simple note taking app
 - Take drawing notes
 - Backup and restore notes
 
+**Download** https://github.com/yaa110/Memento/releases/download/v1.0.0/memento1.apk
+
 ## Dependencies
 
 - **RichEditor for Android** [RichEditor for Android](https://github.com/wasabeef/richeditor-android) is a beautiful Rich Text WYSIWYG Editor for Android.
