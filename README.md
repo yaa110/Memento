@@ -1,6 +1,6 @@
 Memento
 =======
-A simple note taking app
+**Memento** is a simple note taking app for Android.
 
 ## Features
 
