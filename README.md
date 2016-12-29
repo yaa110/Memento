@@ -9,7 +9,7 @@ Memento
 - Take drawing notes
 - Backup and restore notes
 
-**Download** https://github.com/yaa110/Memento/releases/download/v1.0.0/memento1.apk
+**Download** https://github.com/yaa110/Memento/releases
 
 ## Dependencies
 
